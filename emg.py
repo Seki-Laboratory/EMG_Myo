@@ -12,7 +12,7 @@ class Emg(myo.DeviceListener):
 
   def on_emg(self, event):
     emg = event.emg
-    #print(emg)
+
 
 
 
@@ -21,7 +21,6 @@ def main():
   hub = myo.Hub()
   listener = Emg()
   while hub.run(listener.on_event, 500):
-    print("a")
     pass
 
 if __name__ == '__main__':

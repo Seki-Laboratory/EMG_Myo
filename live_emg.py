@@ -48,6 +48,7 @@ class EmgCollector(myo.DeviceListener):
     event.device.stream_emg(True)
 
   def on_emg(self, event):
+    print(event.emg)
     with self.lock:
       self.emg_data_queue.append((event.timestamp, event.emg))
 
@@ -82,10 +83,11 @@ class Plot(object):
 def main():
   myo.init(sdk_path=r'C:\work\myo-sdk-win-0.9.0-main')
   hub = myo.Hub()
-  listener = EmgCollector(512)
+  listener = EmgCollector(20)
   with hub.run_in_background(listener.on_event):
     Plot(listener).main()
-
+  # while hub.run(listener.on_event, 500):
+  #   pass
 
 if __name__ == '__main__':
   main()
