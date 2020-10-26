@@ -11,7 +11,7 @@ class Emg(myo.DeviceListener):
   def __init__(self):
     print("class Emg instanced")
 
-  def on_arm_synced(self, event):
+  def on_connected(self, event):
     event.device.stream_emg(True)
 
   def on_emg(self, event):
