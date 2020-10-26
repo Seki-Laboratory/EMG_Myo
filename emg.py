@@ -15,9 +15,12 @@ class Emg(myo.DeviceListener):
     event.device.stream_emg(True)
 
   def on_emg(self, event):
-    
-    emg = event.emg
-    print(emg)
+    self.emg = event.emg
+    print(self.emg,len(self.emg))
+  
+  def rms(self):
+    list = self.emg 
+
 
 #main関数
 def main():
