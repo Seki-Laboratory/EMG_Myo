@@ -55,7 +55,7 @@ class EmgRate(myo.DeviceListener):
 
 
 def main():
-  myo.init()
+  myo.init(sdk_path=r'C:\work\myo-sdk-win-0.9.0-main')
   hub = myo.Hub()
   listener = EmgRate(n=50)
   while hub.run(listener.on_event, 500):

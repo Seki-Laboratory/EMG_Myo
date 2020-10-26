@@ -44,7 +44,7 @@ class Listener(myo.DeviceListener):
 
 
 if __name__ == '__main__':
-  myo.init()
+  myo.init(sdk_path=r'C:\work\myo-sdk-win-0.9.0-main')
   hub = myo.Hub()
   listener = Listener()
   while hub.run(listener.on_event, 500):
