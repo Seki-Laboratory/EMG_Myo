@@ -18,9 +18,6 @@ class Emg(myo.DeviceListener):
     self.emg = event.emg
     #print(self.emg,len(self.emg))
   
-
-
-
 #main関数
 def main():
   myo.init(sdk_path=r'C:\work\myo-sdk-win-0.9.0-main')
