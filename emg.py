@@ -12,33 +12,41 @@ class Emg(myo.DeviceListener):
 
   def __init__(self):
     print("class Emg instanced")
+    self.rms = np.zeros(8,dtype = int)   
+    self.result = np.zeros(8,dtype = int)  
+    
 
   def on_connected(self, event):
     event.device.stream_emg(True)
 
-  def on_emg(self, event):
+  def on_emg(self,event):
     self.emg = event.emg
-    #print(self.emg,len(self.emg))
-    sq = np.array(self.square())
-    b=np.ones((20,8))/20
-    #y2=np.convolve(sq, b, mode='vaild')#移動平均
-    print(b)
-
-  
-  def square(self):
     square = np.array(self.emg)**2
-    return square
 
-      
-      
+    for i in range(20):
+      self.rms += square
+
+    self.result = self.rms/500
+    print(self.result)
+
+    self.rms = np.zeros(8,dtype = int)   
+    self.result = np.zeros(8,dtype = int)
+
 #main関数
 def main():
   myo.init(sdk_path=r'C:\work\myo-sdk-win-0.9.0-main')
   hub = myo.Hub()  #myoモジュールのHubクラスのインスタンス
   listener = Emg() #emgクラスのインスタンス
+  start = time.time()
   try:
     while hub.run(listener.on_event, 500):
-      pass
+      finish = time.time()
+      t = finish - start
+      if t >= 5:
+        finish = time.time()
+        print("stop",finish-start,"秒")
+        break
+
   except KeyboardInterrupt:
     # Ctrl-C を捕まえた！
     print('interrupted!')
