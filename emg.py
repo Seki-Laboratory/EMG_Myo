@@ -4,6 +4,8 @@ import collections
 import myo
 import time
 import sys
+import numpy as np
+from numpy.core.fromnumeric import reshape
 
 #Emgクラス　サンプリング周波数200でデータを取得するクラス
 class Emg(myo.DeviceListener):
@@ -17,7 +19,18 @@ class Emg(myo.DeviceListener):
   def on_emg(self, event):
     self.emg = event.emg
     #print(self.emg,len(self.emg))
+    sq = np.array(self.square())
+    b=np.ones((20,8))/20
+    #y2=np.convolve(sq, b, mode='vaild')#移動平均
+    print(b)
+
   
+  def square(self):
+    square = np.array(self.emg)**2
+    return square
+
+      
+      
 #main関数
 def main():
   myo.init(sdk_path=r'C:\work\myo-sdk-win-0.9.0-main')
