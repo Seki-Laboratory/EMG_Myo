@@ -25,9 +25,10 @@ class Emg(myo.DeviceListener):
 
     for i in range(20):
       self.rms += square
+      print(i+1)
 
-    self.result = self.rms/500
-    print(self.result)
+    
+    
 
     self.rms = np.zeros(8,dtype = int)   
     self.result = np.zeros(8,dtype = int)
@@ -42,7 +43,7 @@ def main():
     while hub.run(listener.on_event, 500):
       finish = time.time()
       t = finish - start
-      if t >= 5:
+      if t >= 2:
         finish = time.time()
         print("stop",finish-start,"秒")
         break
