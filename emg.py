@@ -14,6 +14,7 @@ class Emg(myo.DeviceListener):
     print("class Emg instanced")
     self.rms = np.zeros(8,dtype = int)   
     self.result = np.zeros(8,dtype = int)  
+    self.i = 0
     
 
   def on_connected(self, event):
@@ -22,10 +23,13 @@ class Emg(myo.DeviceListener):
   def on_emg(self,event):
     self.emg = event.emg
     square = np.array(self.emg)**2
+    self.rms += square
+    
 
-    for i in range(20):
-      self.rms += square
-      print(i+1)
+    if self.i%20 == 0:
+      print(self.rms/20)
+      self.i = 0
+    self.i = self.i+1
 
     
     
@@ -41,11 +45,11 @@ def main():
   start = time.time()
   try:
     while hub.run(listener.on_event, 500):
-      finish = time.time()
-      t = finish - start
+      current = time.time()
+      t = current - start
       if t >= 2:
-        finish = time.time()
-        print("stop",finish-start,"秒")
+        current = time.time()
+        print("stop"  ,t,"秒")
         break
 
   except KeyboardInterrupt:
