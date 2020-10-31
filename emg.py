@@ -31,11 +31,12 @@ class Emg(myo.DeviceListener):
       self.add = np.append(self.add,self.emg,axis=0)
     else:
       self.add = np.delete(self.add, 1, 0)
-      sum = np.sum(self.add[1:],axis=0)
-      ave = sum/20
-      sqrt = np.sqrt(ave)
-      np.set_printoptions(precision=0)
-      print(sqrt)
+
+    sum = np.sum(self.add[1:],axis=0)
+    ave = sum/20
+    sqrt = np.sqrt(ave)
+    np.set_printoptions(precision=0)
+    print(sqrt)
       
 
   
@@ -67,7 +68,7 @@ def main():
     while hub.run(listener.on_event, 500):
       current = time.time()
       t = float(current - start)
-      if t >= 10:
+      if t >= 1:
         print("stop"  ,t,"秒")
         break
 
