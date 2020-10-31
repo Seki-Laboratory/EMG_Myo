@@ -20,35 +20,25 @@ class Emg(myo.DeviceListener):
 
   def on_connected(self, event):
     event.device.stream_emg(True)
-  
-  def Mrms(self):
-        
-    emg = np.reshape(self.emg,(1,8))
-    self.add = np.append(self.add,emg,axis=0)
-    
-    
-    if self.i == 19:
-      print(self.add)
-      self.add =  np.zeros((1,8)) 
-      self.i = 0
-    self.i += 1
+ 
 
 
   def on_emg(self,event):
-    self.emg = event.emg
-    self.Mrms()
-   
-
+    self.emg = np.array(event.emg)**2
+    self.emg = np.reshape(self.emg,(1,8))
     
+    if self.add.shape[0] <= 21:
+      self.add = np.append(self.add,self.emg,axis=0)
+    else:
+      self.add = np.delete(self.add, 1, 0)
+      sum = np.sum(self.add[1:],axis=0)
+      ave = sum/20
+      sqrt = np.sqrt(ave)
+      np.set_printoptions(precision=0)
+      print(sqrt)
+      
 
-    # square = np.array(self.emg)**2
-    # self.add = np.append(self.add,square,axis=0)
-
-
-
-
-
-
+  
   # def on_emg(self,event):
   #   self.emg = event.emg
   #   square = np.array(self.emg)**2
@@ -71,12 +61,13 @@ def main():
   myo.init(sdk_path=r'C:\work\myo-sdk-win-0.9.0-main')
   hub = myo.Hub()  #myoモジュールのHubクラスのインスタンス
   listener = Emg() #emgクラスのインスタンス
-  start = time.time()
+
   try:
-    while hub.run(listener.on_event, 100):
+    start = time.time()
+    while hub.run(listener.on_event, 500):
       current = time.time()
-      t = int(current - start)
-      if t >= 1:
+      t = float(current - start)
+      if t >= 10:
         print("stop"  ,t,"秒")
         break
 
