@@ -12,30 +12,59 @@ class Emg(myo.DeviceListener):
 
   def __init__(self):
     print("class Emg instanced")
-    self.rms = np.zeros(8,dtype = int)   
-    self.result = np.zeros(8,dtype = int)  
+    self.rms = np.zeros((1,8))   
+    self.result = np.zeros((1,8)) 
+    self.add =  np.zeros((1,8)) 
     self.i = 0
     
 
   def on_connected(self, event):
     event.device.stream_emg(True)
+  
+  def Mrms(self):
+        
+    emg = np.reshape(self.emg,(1,8))
+    self.add = np.append(self.add,emg,axis=0)
+    
+    
+    if self.i == 19:
+      print(self.add)
+      self.add =  np.zeros((1,8)) 
+      self.i = 0
+    self.i += 1
+
 
   def on_emg(self,event):
     self.emg = event.emg
-    square = np.array(self.emg)**2
-    self.rms += square
-    
-
-    if self.i%20 == 0:
-      print(self.rms/20)
-      self.i = 0
-    self.i = self.i+1
+    self.Mrms()
+   
 
     
+
+    # square = np.array(self.emg)**2
+    # self.add = np.append(self.add,square,axis=0)
+
+
+
+
+
+
+  # def on_emg(self,event):
+  #   self.emg = event.emg
+  #   square = np.array(self.emg)**2
+  #   self.rms += square
     
 
-    self.rms = np.zeros(8,dtype = int)   
-    self.result = np.zeros(8,dtype = int)
+  #   if self.i%20 == 0:
+  #     print(self.rms/20)
+  #     self.i = 0
+  #   self.i = self.i+1
+
+    
+    
+
+  #   self.rms = np.zeros(8,dtype = int)   
+  #   self.result = np.zeros(8,dtype = int)
 
 #main関数
 def main():
@@ -44,11 +73,10 @@ def main():
   listener = Emg() #emgクラスのインスタンス
   start = time.time()
   try:
-    while hub.run(listener.on_event, 500):
+    while hub.run(listener.on_event, 100):
       current = time.time()
-      t = current - start
-      if t >= 2:
-        current = time.time()
+      t = int(current - start)
+      if t >= 1:
         print("stop"  ,t,"秒")
         break
 
