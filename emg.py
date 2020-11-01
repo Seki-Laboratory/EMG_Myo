@@ -1,11 +1,8 @@
-from __future__ import print_function
-import collections
 #モジュールmyoをインポート
 import myo
 import time
 import sys
 import numpy as np
-from numpy.core.fromnumeric import reshape
 import csv
 
 #Emgクラス　サンプリング周波数200でデータを取得するクラス
@@ -25,9 +22,8 @@ class Emg(myo.DeviceListener):
 
   def on_emg(self,event):
     self.emg = np.array(event.emg)**2
-#______________Moving_RMS_________________________
+#_____________Mode0_Moving_RMS_________________________
     if self.mode == 0:
-      self.emg = np.array(event.emg)**2
       self.emg = np.reshape(self.emg,(1,8))
       
       if self.add.shape[0] <= 21:
@@ -47,7 +43,7 @@ class Emg(myo.DeviceListener):
           writer.writerow(sqrt)
         self.i += 1
 
-#___________________RMS_____________________________
+#_________________Mode1_RMS_____________________________
     elif self.mode == 1:
       self.rms += self.emg
 
@@ -73,7 +69,7 @@ class Emg(myo.DeviceListener):
 def main():
   myo.init(sdk_path=r'C:\work\myo-sdk-win-0.9.0-main')
   hub = myo.Hub()  #myoモジュールのHubクラスのインスタンス
-  listener = Emg(mode=1) #emgクラスのインスタンス
+  listener = Emg(mode=0) #emgクラスのインスタンス (mode0 = Moving_RMS) (mode1 = RMS)
 
   try:
     start = time.time()
