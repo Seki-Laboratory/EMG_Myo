@@ -21,6 +21,12 @@ knn.fit(rms_df, rms_target_data)
 test = np.array([[15,1,2,5,3,5,7,1]])
 # test = pd.DataFrame(test, columns=["e1","e2","e3","e4","e5","e6","e7","e8"])
 print(knn.predict(test))
+print(knn.predict(test))
+print(knn.predict(test))
+print(knn.predict(test))
+print(knn.predict(test))
+print(knn.predict(test))
+print(knn.predict(test))
 
 
 
