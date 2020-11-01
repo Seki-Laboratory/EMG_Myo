@@ -5,6 +5,7 @@ import sys
 import numpy as np
 import pandas as pd
 from sklearn.neighbors import KNeighborsClassifier
+import serial
 # from sklearn.neighbors import KNeighborsClassifier
 
 #Emgクラス　サンプリング周波数200でデータを取得するクラス
@@ -23,7 +24,7 @@ class Emg(myo.DeviceListener):
     label = np.ravel(RMSList[:,8:9])
     rms_df = pd.DataFrame(element, columns=["e1","e2","e3","e4","e5","e6","e7","e8"])
     rms_target_data = pd.DataFrame(label, columns=["label"])
-    self.knn = KNeighborsClassifier(n_neighbors=30)
+    self.knn = KNeighborsClassifier(n_neighbors=3)
     self.knn.fit(rms_df, rms_target_data)
     print("--------学習完了--------")
 
@@ -47,10 +48,9 @@ class Emg(myo.DeviceListener):
       sqrt = np.sqrt(ave)
       sqrt = np.round(sqrt, decimals=2)
       sqrt = np.array([sqrt])
-      print(self.knn.predict(sqrt))
-      if self.i <= 19:
-        self.i += 1
-
+      result = int(self.knn.predict(sqrt)[0])
+      print(result)
+      
 #_________________Mode1_RMS_____________________________
     elif self.mode == 1:
       self.rms += self.emg
@@ -59,29 +59,30 @@ class Emg(myo.DeviceListener):
         ave = self.rms/20
         sqrt = np.sqrt(ave)
         sqrt = np.round(sqrt, decimals=2)
-        # sqrt = np.reshape(sqrt,(8))
-        # print(sqrt)
 
-        # if self.i <= 19:
-        #   self.i += 1
-        print(self.knn.predict(sqrt))
+        result = int(self.knn.predict(sqrt)[0])
+        print(result)
+        result= str(result)
+        with serial.Serial('COM3',115200) as ser:
+            ser.write(bytes(result,'utf-8'))  
 
         self.rms = np.zeros((1,8))
         self.j = 0
 
       self.j += 1
 
+
 #main関数
 def main():
   myo.init(sdk_path=r'C:\work\myo-sdk-win-0.9.0-main')
   hub = myo.Hub()  #myoモジュールのHubクラスのインスタンス
-  listener = Emg(mode=0) #emgクラスのインスタンス (mode0 = Moving_RMS) (mode1 = RMS)
+  listener = Emg(mode=1) #emgクラスのインスタンス (mode0 = Moving_RMS) (mode1 = RMS)
   try:
     start = time.time()
     while hub.run(listener.on_event,100):
       current = time.time()
       t = float(current - start)
-      if t >= 3:
+      if t >= 10:
         print("stop"  ,t,"秒")
         break
 
