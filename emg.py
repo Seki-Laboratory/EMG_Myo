@@ -110,7 +110,7 @@ def main():
       t = float(current - start)
       if listener.stop == 1:
         print("作業時間" ,t,"秒")
-        winsound.PlaySound("ed.wav", winsound.SND_FILENAME)
+        winsound.PlaySound("ed1.wav", winsound.SND_FILENAME)
         print("お疲れ様でした")
         break
 
