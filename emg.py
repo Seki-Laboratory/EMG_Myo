@@ -5,6 +5,7 @@ import sys
 import numpy as np
 import csv
 from msvcrt import getch
+import winsound
 
 #Emgクラス　サンプリング周波数200でデータを取得するクラス
 class Emg(myo.DeviceListener):
@@ -67,6 +68,7 @@ class Emg(myo.DeviceListener):
         elif self.i >= 20:
           event.device.stream_emg(False)
           print("ジェスチャ",self.label,"の学習データを取得しました。  [続行 = Enter][終了 = Esc] ")
+          winsound.PlaySound("3.wav", winsound.SND_FILENAME)
           while True:
             key = ord(getch())
             if key == 13:
@@ -91,13 +93,16 @@ def main():
 
   myo.init(sdk_path=r'C:\work\myo-sdk-win-0.9.0-main')
   hub = myo.Hub()  #myoモジュールのHubクラスのインスタンス
-  print("Modeを選択してください。　[通常RMS = 1][移動RMS = 0]")
-  i = int(input())
-  listener = Emg(mode=i) #emgクラスのインスタンス (mode0 = Moving_RMS) (mode1 = RMS)
-  print("適当なキー入力で取得開始します")
+  print("学習データ取得システム起動しました")
+  # print("Modeを選択してください。　[通常RMS = 1][移動RMS = 0]")
+  winsound.PlaySound("1.wav", winsound.SND_FILENAME)
+  winsound.PlaySound("2.wav", winsound.SND_FILENAME)
+  listener = Emg(mode=1) #emgクラスのインスタンス (mode0 = Moving_RMS) (mode1 = RMS)
+  print("適当なキー入力で取得を開始します")
   key = ord(getch())
 
   try:
+
     start = time.time()
     while hub.run(listener.on_event, 100):
       current = time.time()
