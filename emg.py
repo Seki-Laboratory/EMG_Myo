@@ -67,13 +67,16 @@ class Emg(myo.DeviceListener):
         elif self.i >= 20:
           event.device.stream_emg(False)
           print("学習データを取得しました。  [続行 = Enter][終了 = Esc] ")
-          key = ord(getch())
-          if key == 13:
-            self.label += 1
-            event.device.stream_emg(True)
-            self.i = 0
-          elif key == 27:
-            self.stop = 1
+          while True:
+            key = ord(getch())
+            if key == 13:
+              self.label += 1
+              event.device.stream_emg(True)
+              self.i = 0
+              break
+            elif key == 27:
+              self.stop = 1
+              break
 
         self.rms = np.zeros((1,8))
         self.j = 0

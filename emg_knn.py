@@ -63,8 +63,8 @@ class Emg(myo.DeviceListener):
         result = int(self.knn.predict(sqrt)[0])
         print(result)
         result= str(result)
-        with serial.Serial('COM3',115200) as ser:
-            ser.write(bytes(result,'utf-8'))  
+        # with serial.Serial('COM3',115200) as ser:
+        #     ser.write(bytes(result,'utf-8'))  
 
         self.rms = np.zeros((1,8))
         self.j = 0
