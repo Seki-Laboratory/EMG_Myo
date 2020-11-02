@@ -18,10 +18,10 @@ class Emg(myo.DeviceListener):
     self.j = 0
     self.label = int(0)
     self.stop = 0
+    print("ジェスチャ",self.label,"の学習データを取得します。")
   
   def on_connected(self, event):
       event.device.stream_emg(True)
-      print("stream_start")
 
   def on_emg(self,event):
     self.emg = np.array(event.emg)**2
@@ -66,15 +66,18 @@ class Emg(myo.DeviceListener):
           self.i += 1
         elif self.i >= 20:
           event.device.stream_emg(False)
-          print("学習データを取得しました。  [続行 = Enter][終了 = Esc] ")
+          print("ジェスチャ",self.label,"の学習データを取得しました。  [続行 = Enter][終了 = Esc] ")
           while True:
             key = ord(getch())
             if key == 13:
+
               self.label += 1
+              print("ジェスチャ",self.label,"の学習データを取得します。")
               event.device.stream_emg(True)
               self.i = 0
               break
             elif key == 27:
+              print("学習データの取得終了します。")
               self.stop = 1
               break
 
@@ -85,6 +88,7 @@ class Emg(myo.DeviceListener):
 
 #main関数
 def main():
+
   myo.init(sdk_path=r'C:\work\myo-sdk-win-0.9.0-main')
   hub = myo.Hub()  #myoモジュールのHubクラスのインスタンス
   print("Modeを選択してください。　[通常RMS = 1][移動RMS = 0]")
@@ -99,7 +103,7 @@ def main():
       current = time.time()
       t = float(current - start)
       if listener.stop == 1:
-        print("学習データ取得を終了します。　作業時間" ,t,"秒")
+        print("作業時間" ,t,"秒")
         break
 
   except KeyboardInterrupt:
