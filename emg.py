@@ -4,6 +4,7 @@ import time
 import sys
 import numpy as np
 import csv
+from msvcrt import getch
 
 #Emgクラス　サンプリング周波数200でデータを取得するクラス
 class Emg(myo.DeviceListener):
@@ -15,10 +16,12 @@ class Emg(myo.DeviceListener):
     self.mode = mode
     self.i = 0
     self.j = 0
-    
-
+    self.label = int(0)
+    self.stop = 0
+  
   def on_connected(self, event):
       event.device.stream_emg(True)
+      print("stream_start")
 
   def on_emg(self,event):
     self.emg = np.array(event.emg)**2
@@ -45,6 +48,7 @@ class Emg(myo.DeviceListener):
 
 #_________________Mode1_RMS_____________________________
     elif self.mode == 1:
+
       self.rms += self.emg
 
       if self.j == 19:
@@ -52,6 +56,7 @@ class Emg(myo.DeviceListener):
         sqrt = np.sqrt(ave)
         sqrt = np.round(sqrt, decimals=2)
         sqrt = np.reshape(sqrt,(8))
+        sqrt = np.append(sqrt,self.label)
         print(sqrt)
 
         if self.i <= 19:
@@ -59,6 +64,16 @@ class Emg(myo.DeviceListener):
             writer = csv.writer(f, lineterminator='\n') # 行末は改行
             writer.writerow(sqrt)
           self.i += 1
+        elif self.i >= 20:
+          event.device.stream_emg(False)
+          print("学習データを取得しました。  [続行 = Enter][終了 = Esc] ")
+          key = ord(getch())
+          if key == 13:
+            self.label += 1
+            event.device.stream_emg(True)
+            self.i = 0
+          elif key == 27:
+            self.stop = 1
 
         self.rms = np.zeros((1,8))
         self.j = 0
@@ -76,8 +91,8 @@ def main():
     while hub.run(listener.on_event, 100):
       current = time.time()
       t = float(current - start)
-      if listener.i >= 20:
-        print("stop"  ,t,"秒")
+      if listener.stop == 1:
+        print("学習データ取得を終了します。　作業時間" ,t,"秒")
         break
 
   except KeyboardInterrupt:
