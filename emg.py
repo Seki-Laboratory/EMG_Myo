@@ -97,6 +97,7 @@ def main():
   # print("Modeを選択してください。　[通常RMS = 1][移動RMS = 0]")
   winsound.PlaySound("1.wav", winsound.SND_FILENAME)
   winsound.PlaySound("2.wav", winsound.SND_FILENAME)
+  winsound.PlaySound("4.wav", winsound.SND_FILENAME)
   listener = Emg(mode=1) #emgクラスのインスタンス (mode0 = Moving_RMS) (mode1 = RMS)
   print("適当なキー入力で取得を開始します")
   key = ord(getch())
@@ -109,6 +110,8 @@ def main():
       t = float(current - start)
       if listener.stop == 1:
         print("作業時間" ,t,"秒")
+        winsound.PlaySound("ed.wav", winsound.SND_FILENAME)
+        print("お疲れ様でした")
         break
 
   except KeyboardInterrupt:
