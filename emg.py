@@ -84,7 +84,11 @@ class Emg(myo.DeviceListener):
 def main():
   myo.init(sdk_path=r'C:\work\myo-sdk-win-0.9.0-main')
   hub = myo.Hub()  #myoモジュールのHubクラスのインスタンス
-  listener = Emg(mode=1) #emgクラスのインスタンス (mode0 = Moving_RMS) (mode1 = RMS)
+  print("Modeを選択してください。　[通常RMS = 1][移動RMS = 0]")
+  i = int(input())
+  listener = Emg(mode=i) #emgクラスのインスタンス (mode0 = Moving_RMS) (mode1 = RMS)
+  print("適当なキー入力で取得開始します")
+  key = ord(getch())
 
   try:
     start = time.time()
