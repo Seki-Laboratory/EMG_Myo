@@ -61,7 +61,7 @@ class Plot(object):
 
 
 def main():
-  myo.init(sdk_path=r'C:\work\myo-sdk-win-0.9.0-main')
+  myo.init(bin_path=r'./bin')
   hub = myo.Hub()
   listener = EmgCollector(512)
   with hub.run_in_background(listener.on_event):
