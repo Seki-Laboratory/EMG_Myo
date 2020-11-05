@@ -27,6 +27,8 @@ class Emg(myo.DeviceListener):
     self.knn = KNeighborsClassifier(n_neighbors=3)
     self.knn.fit(rms_df, rms_target_data)
     print("--------学習完了--------")
+    #______serial_init_____
+    self.ser = serial.Serial('COM3',115200)
 
   def on_connected(self, event):
       event.device.stream_emg(True)
@@ -50,6 +52,8 @@ class Emg(myo.DeviceListener):
       sqrt = np.array([sqrt])
       result = int(self.knn.predict(sqrt)[0])
       print(result)
+      result= str(result)
+      self.ser.write(bytes(result,'utf-8')) 
       
 #_________________Mode1_RMS_____________________________
     elif self.mode == 1:
@@ -63,8 +67,8 @@ class Emg(myo.DeviceListener):
         result = int(self.knn.predict(sqrt)[0])
         print(result)
         result= str(result)
-        # with serial.Serial('COM3',115200) as ser:
-        #     ser.write(bytes(result,'utf-8'))  
+        #arduino へ書き込み
+        self.ser.write(bytes(result,'utf-8'))  
 
         self.rms = np.zeros((1,8))
         self.j = 0
@@ -76,7 +80,7 @@ class Emg(myo.DeviceListener):
 def main():
   myo.init(bin_path=r'./bin')
   hub = myo.Hub()  #myoモジュールのHubクラスのインスタンス
-  listener = Emg(mode=1) #emgクラスのインスタンス (mode0 = Moving_RMS) (mode1 = RMS)
+  listener = Emg(mode=0) #emgクラスのインスタンス (mode0 = Moving_RMS) (mode1 = RMS)
   try:
     start = time.time()
     while hub.run(listener.on_event,100):
@@ -84,6 +88,7 @@ def main():
       t = float(current - start)
       if t >= 10:
         print("stop"  ,t,"秒")
+        listener.ser.close()
         break
 
   except KeyboardInterrupt:
