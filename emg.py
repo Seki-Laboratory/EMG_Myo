@@ -92,7 +92,7 @@ class Emg(myo.DeviceListener):
 #main関数
 def main():
 
-  myo.init(sdk_path=r'C:\work\myo-sdk-win-0.9.0-main')
+  myo.init(bin_path=r'./bin')
   hub = myo.Hub()  #myoモジュールのHubクラスのインスタンス
   hub1 = myo.Hub()
   listener = Emg(mode=1) #emgクラスのインスタンス (mode0 = Moving_RMS) (mode1 = RMS)
