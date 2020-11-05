@@ -5,6 +5,7 @@ import sys
 import numpy as np
 import pandas as pd
 from sklearn.neighbors import KNeighborsClassifier
+import collections
 import serial
 # from sklearn.neighbors import KNeighborsClassifier
 
@@ -15,20 +16,21 @@ class Emg(myo.DeviceListener):
     print("class Emg instanced mode=",mode)
     self.rms = np.zeros((1,8))   
     self.add =  np.zeros((1,8)) 
+    self.element = np.zeros(1)
     self.mode = mode
     self.i = 0
     self.j = 0
     #_____knn_init________
     RMSList=np.loadtxt('RMSdata.csv', delimiter=',')
     element = RMSList [:,0:8]
-    label = np.ravel(RMSList[:,8:9])
+    label = np.ravel(RMSList[:,8:9]) 
     rms_df = pd.DataFrame(element, columns=["e1","e2","e3","e4","e5","e6","e7","e8"])
     rms_target_data = pd.DataFrame(label, columns=["label"])
     self.knn = KNeighborsClassifier(n_neighbors=3)
     self.knn.fit(rms_df, rms_target_data)
     print("--------学習完了--------")
     #______serial_init_____
-    self.ser = serial.Serial('COM3',115200)
+    # self.ser = serial.Serial('COM3',115200)
 
   def on_connected(self, event):
       event.device.stream_emg(True)
@@ -51,9 +53,17 @@ class Emg(myo.DeviceListener):
       sqrt = np.round(sqrt, decimals=2)
       sqrt = np.array([sqrt])
       result = int(self.knn.predict(sqrt)[0])
-      print(result)
-      result= str(result)
-      self.ser.write(bytes(result,'utf-8')) 
+      self.element = np.append(self.element,result)
+      if self.i == 20:
+        c = collections.Counter(self.element[1:])
+        print(c.most_common()[0])
+        self.element = np.zeros(1)
+        self.i = 0
+      self.i += 1
+
+      # print(result)
+      # result= str(result)
+      # self.ser.write(bytes(result,'utf-8')) 
       
 #_________________Mode1_RMS_____________________________
     elif self.mode == 1:
@@ -86,9 +96,9 @@ def main():
     while hub.run(listener.on_event,100):
       current = time.time()
       t = float(current - start)
-      if t >= 10:
+      if t >= 20:
         print("stop"  ,t,"秒")
-        listener.ser.close()
+        # listener.ser.close()
         break
 
   except KeyboardInterrupt:
