@@ -69,7 +69,7 @@ class Emg(myo.DeviceListener):
         elif self.i >= 20:
           event.device.stream_emg(False)
           print("ジェスチャ",self.label,"の学習データを取得しました。  [続行 = Enter][終了 = Esc] ")
-          winsound.PlaySound("sound/3.wav", winsound.SND_FILENAME)
+          # winsound.PlaySound("sound/3.wav", winsound.SND_FILENAME)
           while True:
             key = ord(getch())
             if key == 13:
@@ -97,19 +97,19 @@ def main():
   hub1 = myo.Hub()
   listener = Emg(mode=1) #emgクラスのインスタンス (mode0 = Moving_RMS) (mode1 = RMS)
   listener1 = myo.ApiDeviceListener()
-  winsound.PlaySound("sound/1.wav", winsound.SND_FILENAME)
-  winsound.PlaySound("sound/2.wav", winsound.SND_FILENAME)
+  # winsound.PlaySound("sound/1.wav", winsound.SND_FILENAME)
+  # winsound.PlaySound("sound/2.wav", winsound.SND_FILENAME)
   print("学習データ取得システム起動しました")
   with hub1.run_in_background(listener1.on_event):
     print("Waiting for a Myo to connect ...")
-    winsound.PlaySound("sound/check.wav", winsound.SND_FILENAME)
+    # winsound.PlaySound("sound/check.wav", winsound.SND_FILENAME)
     device = listener1.wait_for_single_device(2)
   if not device:
     print("No Myo connected after 2 seconds.")
-    winsound.PlaySound("sound/error.wav", winsound.SND_FILENAME)
+    # winsound.PlaySound("sound/error.wav", winsound.SND_FILENAME)
     return
   else:
-    winsound.PlaySound("sound/ok.wav", winsound.SND_FILENAME)
+    # winsound.PlaySound("sound/ok.wav", winsound.SND_FILENAME)
     print("適当なキー入力で取得を開始します")
     key = ord(getch())
 
@@ -123,7 +123,7 @@ def main():
       t = float(current - start)
       if listener.stop == 1 or not device:
         print("作業時間" ,t,"秒")
-        winsound.PlaySound("sound/ed1.wav", winsound.SND_FILENAME)
+        # winsound.PlaySound("sound/ed1.wav", winsound.SND_FILENAME)
         print("お疲れ様でした")
         break
 
