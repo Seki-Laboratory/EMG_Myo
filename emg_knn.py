@@ -20,6 +20,7 @@ class Emg(myo.DeviceListener):
     self.mode = mode
     self.i = 0
     self.j = 0
+    self.list_c2 = 0
     #_____knn_init________
     RMSList=np.loadtxt('RMSdata.csv', delimiter=',')
     element = RMSList [:,0:8]
@@ -30,7 +31,7 @@ class Emg(myo.DeviceListener):
     self.knn.fit(rms_df, rms_target_data)
     print("--------学習完了--------")
     #______serial_init_____
-    # self.ser = serial.Serial('COM3',115200)
+    self.ser = serial.Serial('COM13',115200)
 
   def on_connected(self, event):
       event.device.stream_emg(True)
@@ -54,12 +55,21 @@ class Emg(myo.DeviceListener):
       sqrt = np.array([sqrt])
       result = int(self.knn.predict(sqrt)[0])
       self.element = np.append(self.element,result)
-      if self.i == 20:
+      if len(self.element) == 21:
         c = collections.Counter(self.element[1:])
-        print(c.most_common()[0])
+        # print(c.most_common()[0])
+        list = c.most_common()[0]
+        print(list)
+        if list[1] == 20:
+
+          list_c = int(list[0])
+          self.list_c2 = list_c
+          self.ser.write(bytes(str(list_c),'utf-8')) 
+        else:
+          print("none")
+
         self.element = np.zeros(1)
-        self.i = 0
-      self.i += 1
+
 
       # print(result)
       # result= str(result)
@@ -96,10 +106,10 @@ def main():
     while hub.run(listener.on_event,100):
       current = time.time()
       t = float(current - start)
-      if t >= 20:
-        print("stop"  ,t,"秒")
-        # listener.ser.close()
-        break
+      # if t >= 20:
+      #   print("stop"  ,t,"秒")
+      #   # listener.ser.close()
+      #   break
 
   except KeyboardInterrupt:
     # Ctrl-C を捕まえた！
