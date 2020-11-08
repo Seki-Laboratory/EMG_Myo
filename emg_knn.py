@@ -55,11 +55,11 @@ class Emg(myo.DeviceListener):
       sqrt = np.array([sqrt])
       result = int(self.knn.predict(sqrt)[0])
       self.element = np.append(self.element,result)
-      if len(self.element) == 21:
+      if len(self.element) == 26:
         c = collections.Counter(self.element[1:])
         # print(c.most_common()[0])
         list = c.most_common()[0]
-        if list[1] == 20:
+        if list[1] == 25:
           print(list)
           list_c = int(list[0])
           self.ser.write(bytes(str(list_c),'utf-8')) 

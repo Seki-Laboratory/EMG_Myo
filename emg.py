@@ -36,17 +36,43 @@ class Emg(myo.DeviceListener):
       else:
         self.add = np.delete(self.add, 1, 0)
 
-      sum = np.sum(self.add[1:],axis=0)
-      ave = sum/20
-      sqrt = np.sqrt(ave)
-      sqrt = np.round(sqrt, decimals=2)
-      print(sqrt)
+        sum = np.sum(self.add[1:],axis=0)
+        ave = sum/20
+        sqrt = np.sqrt(ave)
+        sqrt = np.round(sqrt, decimals=2)
+        print(sqrt)
 
-      if self.i <= 19:
-        with open('MRMSdata.csv', 'a') as f:
-          writer = csv.writer(f, lineterminator='\n') # 行末は改行
-          writer.writerow(sqrt)
-        self.i += 1
+        # if self.i <= 19:
+        #   with open('MRMSdata.csv', 'a') as f:
+        #     writer = csv.writer(f, lineterminator='\n') # 行末は改行
+        #     writer.writerow(sqrt)
+        #   self.i += 1
+        if self.i <= 39:
+            with open('MRMSdata.csv', 'a') as f:
+              writer = csv.writer(f, lineterminator='\n') # 行末は改行
+              sqrt = np.append(sqrt,self.label)
+              writer.writerow(sqrt)
+            self.i += 1
+        elif self.i >= 40:
+            event.device.stream_emg(False)
+            print("ジェスチャ",self.label,"の学習データを取得しました。  [続行 = Enter][終了 = Esc] ")
+            # winsound.PlaySound("sound/3.wav", winsound.SND_FILENAME)
+            while True:
+              key = ord(getch())
+              if key == 13:
+
+                self.label += 1
+                print("ジェスチャ",self.label,"の学習データを取得します。")
+                event.device.stream_emg(True)
+                self.i = 0
+                break
+              elif key == 27:
+                print("学習データの取得終了します。")
+                self.stop = 1
+                break
+
+ 
+ 
 
 #_________________Mode1_RMS_____________________________
     elif self.mode == 1:
