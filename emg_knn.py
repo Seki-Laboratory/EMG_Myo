@@ -20,7 +20,7 @@ class Emg(myo.DeviceListener):
     self.mode = mode
     self.i = 0
     self.j = 0
-    self.list_c2 = 0
+    self.list = 0
     #_____knn_init________
     RMSList=np.loadtxt('RMSdata.csv', delimiter=',')
     element = RMSList [:,0:8]
@@ -59,16 +59,15 @@ class Emg(myo.DeviceListener):
         c = collections.Counter(self.element[1:])
         # print(c.most_common()[0])
         list = c.most_common()[0]
-        print(list)
         if list[1] == 20:
-
+          print(list)
           list_c = int(list[0])
-          self.list_c2 = list_c
           self.ser.write(bytes(str(list_c),'utf-8')) 
         else:
           print("none")
+          pass
 
-        self.element = np.zeros(1)
+        self.element = np.delete(self.element,1)
 
 
       # print(result)
