@@ -31,7 +31,7 @@ class Emg(myo.DeviceListener):
     self.knn.fit(rms_df, rms_target_data)
     print("--------学習完了--------")
     #______serial_init_____
-    self.ser = serial.Serial('COM13',115200)
+    self.ser = serial.Serial('COM3',115200)
 
   def on_connected(self, event):
       event.device.stream_emg(True)
@@ -48,26 +48,26 @@ class Emg(myo.DeviceListener):
       else:
         self.add = np.delete(self.add, 1, 0)
 
-      sum = np.sum(self.add[1:],axis=0)
-      ave = sum/20
-      sqrt = np.sqrt(ave)
-      sqrt = np.round(sqrt, decimals=2)
-      sqrt = np.array([sqrt])
-      result = int(self.knn.predict(sqrt)[0])
-      self.element = np.append(self.element,result)
-      if len(self.element) == 26:
-        c = collections.Counter(self.element[1:])
-        # print(c.most_common()[0])
-        list = c.most_common()[0]
-        if list[1] == 25:
-          print(list)
-          list_c = int(list[0])
-          self.ser.write(bytes(str(list_c),'utf-8')) 
-        else:
-          print("none")
-          pass
+        sum = np.sum(self.add[1:],axis=0)
+        ave = sum/20
+        sqrt = np.sqrt(ave)
+        sqrt = np.round(sqrt, decimals=2)
+        sqrt = np.array([sqrt])
+        result = int(self.knn.predict(sqrt)[0])
+        self.element = np.append(self.element,result)
+        if len(self.element) == 21:
+          c = collections.Counter(self.element[1:])
+          # print(c.most_common()[0])
+          list = c.most_common()[0]
+          if list[1] == 20:
+            print(list)
+            list_c = int(list[0])
+            self.ser.write(bytes(str(list_c),'utf-8')) 
+          else:
+            print("none")
+            pass
 
-        self.element = np.delete(self.element,1)
+          self.element = np.delete(self.element,1)
 
 
       # print(result)

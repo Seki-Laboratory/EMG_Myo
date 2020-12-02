@@ -41,39 +41,39 @@ class Emg(myo.DeviceListener):
       sqrt = np.sqrt(ave)
       sqrt = np.round(sqrt, decimals=2)
       print(sqrt)
-      if sqrt[4] <= 27:
+      if sqrt[4] <= 10:
         pygame.draw.ellipse(self.screen,(0,100,0),(175,25,50,50),5)
       else:
         pygame.draw.ellipse(self.screen,(0,100,0),(175,25,50,50))
-      if sqrt[5] <= 21:
+      if sqrt[5] <= 10:
         pygame.draw.ellipse(self.screen,(0,100,0),(281,69,50,50),5)
       else:
         pygame.draw.ellipse(self.screen,(0,100,0),(281,69,50,50))
-      if sqrt[6] <= 39:
+      if sqrt[6] <= 10:
         pygame.draw.ellipse(self.screen,(0,100,0),(325,175,50,50),5)
       else:
         pygame.draw.ellipse(self.screen,(0,100,0),(325,175,50,50))
 
-      if sqrt[7] <= 37:
+      if sqrt[7] <= 10:
         pygame.draw.ellipse(self.screen,(0,100,0),(281,281,50,50),5)
       else:
         pygame.draw.ellipse(self.screen,(0,100,0),(281,281,50,50)) 
 
-      if sqrt[0] <= 30:
+      if sqrt[0] <= 10:
         pygame.draw.ellipse(self.screen,(0,100,0),(175,325,50,50),5)
       else:
         pygame.draw.ellipse(self.screen,(0,100,0),(175,325,50,50))
 
-      if sqrt[1] <= 40:
+      if sqrt[1] <= 10:
         pygame.draw.ellipse(self.screen,(0,100,0),(69,281,50,50),5)
       else:
         pygame.draw.ellipse(self.screen,(0,100,0),(69,281,50,50))
 
-      if sqrt[2] <= 27:
+      if sqrt[2] <= 10:
         pygame.draw.ellipse(self.screen,(0,100,0),(25,175,50,50),5)
       else:
         pygame.draw.ellipse(self.screen,(0,100,0),(25,175,50,50))
-      if sqrt[3] <= 27:
+      if sqrt[3] <= 10:
         pygame.draw.ellipse(self.screen,(0,100,0),(69,69,50,50),5)
       else:
         pygame.draw.ellipse(self.screen,(0,100,0),(69,69,50,50))
