@@ -1,4 +1,5 @@
 {
     "port": "COM3",
-    "board": "arduino:avr:micro"
+    "board": "arduino:avr:micro",
+    "sketch": "serial_test.ino"
 }

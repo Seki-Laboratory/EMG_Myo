@@ -31,7 +31,7 @@ class Emg(myo.DeviceListener):
     self.knn.fit(rms_df, rms_target_data)
     print("--------学習完了--------")
     #______serial_init_____
-    self.ser = serial.Serial('COM3',115200)
+    self.ser = serial.Serial('COM3',9600)
 
   def on_connected(self, event):
       event.device.stream_emg(True)
