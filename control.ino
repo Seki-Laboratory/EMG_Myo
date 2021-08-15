@@ -37,26 +37,37 @@ servo_write(4,80);
 break;
 
 
-case'1'://人差し指
+case'1'://開く
 servo_write(0,100);
+servo_write(1,80);
+servo_write(2,80);
+servo_write(4,80);
 
 break;
 
-case'2'://中指
-servo_write(1,110);
+case'2'://小指
+servo_write(0,80);
+servo_write(1,120);
+servo_write(2,80);
+servo_write(4,80);
 break;
 
 case'3'://薬指
+servo_write(0,80);
+servo_write(1,80);
 servo_write(2,112);
-
+servo_write(4,80);
 break;
 
-case'4'://小指
+case'4'://中指
+servo_write(0,80);
+servo_write(1,80);
+servo_write(2,80);
 servo_write(4,110);
 
 break;
 
-case'5'://親指
+case'5'://人差し指
 
 
 break;

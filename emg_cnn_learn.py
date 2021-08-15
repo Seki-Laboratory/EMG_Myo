@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import numpy as np
+from keras.optimizers import Adam, SGD
 from keras.models import Sequential, model_from_json
 from keras.layers import Dense, Dropout, Flatten
 from keras.layers import Conv2D, MaxPooling2D
@@ -56,8 +57,8 @@ def plot_history(history,
 def main():
     # パラメータ
     batch_size = 5 # バッチサイズ
-    num_classes = 3 # 分類クラス数(今回は3種類)
-    epochs = 200      # エポック数(学習の繰り返し回数)
+    num_classes = 15 # 分類クラス数(今回は15種類)
+    epochs = 10     # エポック数(学習の繰り返し回数)
     dropout_rate = 0.2 # 過学習防止用：入力の20%を0にする（破棄）
 
     # 入力画像のパラメータ
@@ -78,26 +79,102 @@ def main():
 
     data_x = []
     data_y = []
-    num_classes = 3
+    num_classes = 15
 
     # クラス0の画像データ群をロード
-    for filepath in list_imgs(SAVE_DATA_DIR_PATH + "nigiru"):
+
+
+    print("class0")
+    for filepath in list_imgs(SAVE_DATA_DIR_PATH + "0"):
         img = img_to_array(load_img(filepath, target_size=(img_width,img_height, img_ch)))
         data_x.append(img)
         data_y.append(0) # 教師データ（正解）
 
-
+    print("class1")
     # クラス1の画像データ群をロード
-    for filepath in list_imgs(SAVE_DATA_DIR_PATH + "hiraku"):
+    for filepath in list_imgs(SAVE_DATA_DIR_PATH + "1"):
         img = img_to_array(load_img(filepath, target_size=(img_width,img_height, img_ch)))
         data_x.append(img)
         data_y.append(1) # 教師データ（正解）
-
+    print("class2")
     # クラス2の画像データ群をロード
-    for filepath in list_imgs(SAVE_DATA_DIR_PATH + "shoukutu"):
+    for filepath in list_imgs(SAVE_DATA_DIR_PATH + "2"):
         img = img_to_array(load_img(filepath, target_size=(img_width,img_height, img_ch)))
         data_x.append(img)
         data_y.append(2) # 教師データ（正解）
+    print("class3")   
+        # クラス3の画像データ群をロード
+    for filepath in list_imgs(SAVE_DATA_DIR_PATH + "3"):
+        img = img_to_array(load_img(filepath, target_size=(img_width,img_height, img_ch)))
+        data_x.append(img)
+        data_y.append(3) # 教師データ（正解）
+    print("class4")    
+        # クラス4の画像データ群をロード
+    for filepath in list_imgs(SAVE_DATA_DIR_PATH + "4"):
+        img = img_to_array(load_img(filepath, target_size=(img_width,img_height, img_ch)))
+        data_x.append(img)
+        data_y.append(4) # 教師データ（正解）
+    print("class5")
+        # クラス5の画像データ群をロード
+    for filepath in list_imgs(SAVE_DATA_DIR_PATH + "5"):
+        img = img_to_array(load_img(filepath, target_size=(img_width,img_height, img_ch)))
+        data_x.append(img)
+        data_y.append(5) # 教師データ（正解）
+    print("class6")
+        # クラス6の画像データ群をロード
+    for filepath in list_imgs(SAVE_DATA_DIR_PATH + "6"):
+        img = img_to_array(load_img(filepath, target_size=(img_width,img_height, img_ch)))
+        data_x.append(img)
+        data_y.append(6) # 教師データ（正解）
+    print("class7")
+        # クラス7の画像データ群をロード
+    for filepath in list_imgs(SAVE_DATA_DIR_PATH + "7"):
+        img = img_to_array(load_img(filepath, target_size=(img_width,img_height, img_ch)))
+        data_x.append(img)
+        data_y.append(7) # 教師データ（正解）
+    print("class8")
+        # クラス8の画像データ群をロード
+    for filepath in list_imgs(SAVE_DATA_DIR_PATH + "8"):
+        img = img_to_array(load_img(filepath, target_size=(img_width,img_height, img_ch)))
+        data_x.append(img)
+        data_y.append(8) # 教師データ（正解）
+    print("class9")
+        # クラス9の画像データ群をロード
+    for filepath in list_imgs(SAVE_DATA_DIR_PATH + "9"):
+        img = img_to_array(load_img(filepath, target_size=(img_width,img_height, img_ch)))
+        data_x.append(img)
+        data_y.append(9) # 教師データ（正解）
+    print("class10")
+        # クラス9の画像データ群をロード
+    for filepath in list_imgs(SAVE_DATA_DIR_PATH + "oya"):
+        img = img_to_array(load_img(filepath, target_size=(img_width,img_height, img_ch)))
+        data_x.append(img)
+        data_y.append(10) # 教師データ（正解）
+    print("class11")
+        # クラス9の画像データ群をロード
+    for filepath in list_imgs(SAVE_DATA_DIR_PATH + "hitosashi"):
+        img = img_to_array(load_img(filepath, target_size=(img_width,img_height, img_ch)))
+        data_x.append(img)
+        data_y.append(11) # 教師データ（正解）
+    print("class12")
+        # クラス9の画像データ群をロード
+    for filepath in list_imgs(SAVE_DATA_DIR_PATH + "naka"):
+        img = img_to_array(load_img(filepath, target_size=(img_width,img_height, img_ch)))
+        data_x.append(img)
+        data_y.append(12) # 教師データ（正解）
+    print("class13")
+        # クラス9の画像データ群をロード
+    for filepath in list_imgs(SAVE_DATA_DIR_PATH + "kusuri"):
+        img = img_to_array(load_img(filepath, target_size=(img_width,img_height, img_ch)))
+        data_x.append(img)
+        data_y.append(13) # 教師データ（正解）
+    print("class14")
+        # クラス9の画像データ群をロード
+    for filepath in list_imgs(SAVE_DATA_DIR_PATH + "ko"):
+        img = img_to_array(load_img(filepath, target_size=(img_width,img_height, img_ch)))
+        data_x.append(img)
+        data_y.append(14) # 教師データ（正解）
+
 
     # NumPy配列に変換
     data_x = np.asarray(data_x)
@@ -106,7 +183,7 @@ def main():
     data_y = np.asarray(data_y)
 
     # 学習用データとテストデータに分割
-    x_train, x_test, y_train, y_test = train_test_split(data_x, data_y, test_size=0.2)
+    x_train, x_test, y_train, y_test = train_test_split(data_x, data_y, test_size=0.15)
 
     # 学習データはfloat32型に変換し、正規化(0～1)
     x_train = x_train.astype('float32')
@@ -133,52 +210,31 @@ def main():
     # Conv2D：2次元畳み込み層で、画像から特徴を抽出（活性化関数：relu）
     # 入力データにカーネルをかける（「2×2」の16種類のフィルタを各マスにかける）
     # 出力ユニット数：16（16枚分の出力データが得られる）
-    model.add(Conv2D(16,(2,2), 
-                padding='same', 
-                input_shape=x_train.shape[1:],
-                activation='relu'))
+    # model.add(Conv2D(16,(3,3), 
+    #             padding='same', 
+    #             input_shape=x_train.shape[1:],
+    #             activation='relu'))
+    # model.add(Conv2D(16,(3,3), 
+    #         padding='same', 
+    #         input_shape=x_train.shape[1:],
+    #         activation='relu'))
+    # model.add(Conv2D(16,(3,3), 
+    #         padding='same', 
+    #         input_shape=x_train.shape[1:],
+    #         activation='relu'))
+    # model.add(Conv2D(16,(3,3), 
+    #         padding='same', 
+    #         input_shape=x_train.shape[1:],
+    #         activation='relu'))
+    # model.add(Conv2D(16,(3,3), 
+    #         padding='same', 
+    #         input_shape=x_train.shape[1:],
+    #         activation='relu'))
 
-    # 【2次元畳み込み層】
-    # 画像から特徴を抽出（活性化関数：relu）
-    # relu(ランプ関数)は、フィルタ後の入力データが0以下の時は出力0（入力が0より大きい場合はそのまま出力）
-    # 入力データにカーネルをかける（「2×2」の16種類のフィルタを使う）
-    # 出力ユニット数：16（16枚分の出力データが得られる）
-    # 問題が複雑ならフィルタの種類を増やす
-    # padding="same"は:の入力と同じ長さを出力がもつように入力にパディング
-    model.add(Conv2D(16,(2,2),
-                padding='same',
-                activation='relu'))
-
-    # 【プーリング層】
-    # 特徴量を圧縮する層。（ロバスト性向上、過学習防止、計算コスト抑制のため）
-    # 畳み込み層で抽出された特徴の位置感度を若干低下させ、対象とする特徴量の画像内での位置が若干変化した場合でもプーリング層の出力が普遍になるようにする。
-    # 画像の空間サイズの大きさを小さくし、調整するパラメーターの数を減らし、過学習を防止
-    # pool_size=(2, 2):「2×2」の大きさの最大プーリング層。
-    # 入力画像内の「2×2」の領域で最大の数値を出力。
-    model.add(MaxPooling2D(pool_size=(2, 2)))
-
-    # ドロップアウト(過学習防止用, dropout_rate=0.2なら20%のユニットを無効化）
-    model.add(Dropout(dropout_rate))
-
-    # 【2次元畳み込み層】
-    # 画像から特徴を抽出（活性化関数：relu）
-    # relu(ランプ関数)は、フィルタ後の入力データが0以下の時は出力0（入力が0より大きい場合はそのまま出力）
-    # 入力データにカーネルをかける（「2×2」の16種類のフィルタを使う）
-    # 出力ユニット数：16（16枚分の出力データが得られる）
-    # 問題が複雑ならフィルタの種類を増やす
-    model.add(Conv2D(16,(2,2),
-                padding='same',
-                activation='relu'))
-
-    # 【2次元畳み込み層】
-    # 画像から特徴を抽出（活性化関数：relu）
-    # relu(ランプ関数)は、フィルタ後の入力データが0以下の時は出力0（入力が0より大きい場合はそのまま出力）
-    # 入力データにカーネルをかける（「2×2」の16種類のフィルタを使う）
-    # 出力ユニット数：16（16枚分の出力データが得られる）
-    # 問題が複雑ならフィルタの種類を増やす
-    model.add(Conv2D(16,(2,2),
-                padding='same',
-                activation='relu'))
+    # model.add(Conv2D(16,(3,3), 
+    #             padding='same', 
+    #             input_shape=x_train.shape[1:],
+    #             activation='relu'))
 
     # 【プーリング層】
     # 特徴量を圧縮する層。（ロバスト性向上、過学習防止、計算コスト抑制のため）
@@ -186,10 +242,41 @@ def main():
     # 画像の空間サイズの大きさを小さくし、調整するパラメーターの数を減らし、過学習を防止
     # pool_size=(2, 2):「2×2」の大きさの最大プーリング層。
     # 入力画像内の「2×2」の領域で最大の数値を出力。
-    model.add(MaxPooling2D(pool_size=(2, 2)))
+    # model.add(MaxPooling2D(pool_size=(2, 2)))
+
+    # # ドロップアウト(過学習防止用, dropout_rate=0.2なら20%のユニットを無効化）
+    # model.add(Dropout(dropout_rate))
+
+    # # 【2次元畳み込み層】
+    # # 画像から特徴を抽出（活性化関数：relu）
+    # # relu(ランプ関数)は、フィルタ後の入力データが0以下の時は出力0（入力が0より大きい場合はそのまま出力）
+    # # 入力データにカーネルをかける（「2×2」の16種類のフィルタを使う）
+    # # 出力ユニット数：16（16枚分の出力データが得られる）
+    # # 問題が複雑ならフィルタの種類を増やす
+    # model.add(Conv2D(16,(3,3),
+    #             padding='same',
+    #             activation='relu'))
+
+    # # 【2次元畳み込み層】
+    # # 画像から特徴を抽出（活性化関数：relu）
+    # # relu(ランプ関数)は、フィルタ後の入力データが0以下の時は出力0（入力が0より大きい場合はそのまま出力）
+    # # 入力データにカーネルをかける（「2×2」の16種類のフィルタを使う）
+    # # 出力ユニット数：16（16枚分の出力データが得られる）
+    # # 問題が複雑ならフィルタの種類を増やす
+    # model.add(Conv2D(16,(3,3),
+    #             padding='same',
+    #             activation='relu'))
+
+    # # 【プーリング層】
+    # # 特徴量を圧縮する層。（ロバスト性向上、過学習防止、計算コスト抑制のため）
+    # # 畳み込み層で抽出された特徴の位置感度を若干低下させ、対象とする特徴量の画像内での位置が若干変化した場合でもプーリング層の出力が普遍になるようにする。
+    # # 画像の空間サイズの大きさを小さくし、調整するパラメーターの数を減らし、過学習を防止
+    # # pool_size=(2, 2):「2×2」の大きさの最大プーリング層。
+    # # 入力画像内の「2×2」の領域で最大の数値を出力。
+    # model.add(MaxPooling2D(pool_size=(2, 2)))
 
     # ドロップアウト(過学習防止用, dropout_rate=0.2なら20%のユニットを無効化）
-    model.add(Dropout(dropout_rate))
+    # model.add(Dropout(dropout_rate))
 
     # 平坦化（次元削減）
     # 1次元ベクトルに変換
@@ -198,6 +285,7 @@ def main():
     # 全結合層
     # 出力ユニット数：512
     model.add(Dense(512, activation='relu'))
+
 
     # ドロップアウト(過学習防止用, dropout_rate=0.2なら20%のユニットを無効化）
     model.add(Dropout(dropout_rate))
@@ -213,6 +301,7 @@ def main():
     # コンパイル（多クラス分類問題）
     # 最適化：RMSpropを使用
     model.compile(loss='categorical_crossentropy', optimizer=RMSprop(), metrics=['accuracy'])
+ 
 
     # 構築したモデルで学習（学習データ:trainのうち、10％を検証データ:validationとして使用）
     # verbose=1:標準出力にログを表示
@@ -221,7 +310,7 @@ def main():
                         batch_size=batch_size, 
                         epochs=epochs, 
                         verbose=1, 
-                        validation_split=0.1)
+                        validation_split=0.15)
 
     # テスト用データセットで学習済分類器に入力し、パフォーマンスを計測
     score = model.evaluate(x_test, 
@@ -235,6 +324,20 @@ def main():
 
     # 正答率（値が大きいほど良い）
     print('Test accuracy:', score[1])
+
+    
+    #混同行列を表示
+    from sklearn.metrics import confusion_matrix
+    predict_classes = model.predict_classes(x_test)
+    true_classes = np.argmax(y_test, 1)
+    cmx = confusion_matrix(true_classes, predict_classes)
+    print(cmx)
+    #混同行列をヒートマップとして表示
+    import seaborn as sns
+    sns.heatmap(cmx, annot=True, fmt='g', square=True)
+    plt.show()
+
+
     
 
     # 学習過程をプロット
