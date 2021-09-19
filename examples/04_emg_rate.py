@@ -46,9 +46,11 @@ class EmgRate(myo.DeviceListener):
     event.device.stream_emg(True)
 
   def on_emg(self, event):
+
     t = time.clock()
     if self.last_time is not None:
       self.times.append(t - self.last_time)
+
       if len(self.times) > self.n:
         self.times.popleft()
     self.last_time = t
@@ -57,7 +59,7 @@ class EmgRate(myo.DeviceListener):
 def main():
   myo.init(bin_path=r'./bin')
   hub = myo.Hub()
-  listener = EmgRate(n=50)
+  listener = EmgRate(n=20)
   while hub.run(listener.on_event, 500):
     print("\r\033[KEMG Rate:", listener.rate, end='')
     sys.stdout.flush()

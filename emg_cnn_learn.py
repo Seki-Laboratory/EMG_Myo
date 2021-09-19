@@ -58,7 +58,7 @@ def main():
     # パラメータ
     batch_size = 5 # バッチサイズ
     num_classes = 15 # 分類クラス数(今回は15種類)
-    epochs = 10     # エポック数(学習の繰り返し回数)
+    epochs = 100     # エポック数(学習の繰り返し回数)
     dropout_rate = 0.2 # 過学習防止用：入力の20%を0にする（破棄）
 
     # 入力画像のパラメータ
@@ -68,6 +68,8 @@ def main():
 
     # データ格納用のディレクトリパス
     SAVE_DATA_DIR_PATH = "img/"
+    SAVE_TESTDATA_DIR_PATH = "test_img/"
+
 
     # ディレクトリがなければ作成
     os.makedirs(SAVE_DATA_DIR_PATH, exist_ok=True)
@@ -76,20 +78,112 @@ def main():
     FIG_SIZE_WIDTH = 12
     FIG_SIZE_HEIGHT = 10
     FIG_FONT_SIZE = 25
-
+    test_data_x = []
+    test_data_y = []
     data_x = []
     data_y = []
     num_classes = 15
 
+#testデータ読み込み
     # クラス0の画像データ群をロード
+    print("test_class0")
+    for filepath in list_imgs(SAVE_TESTDATA_DIR_PATH + "0"):
+        img = img_to_array(load_img(filepath, target_size=(img_width,img_height, img_ch)))
+        test_data_x.append(img)
+        test_data_y.append(0) # 教師データ（正解）
+    print("test_class1")
+    # クラス1の画像データ群をロード
+    for filepath in list_imgs(SAVE_TESTDATA_DIR_PATH + "1"):
+        img = img_to_array(load_img(filepath, target_size=(img_width,img_height, img_ch)))
+        test_data_x.append(img)
+        test_data_y.append(1) # 教師データ（正解）
+    print("test_class2")
+    # クラス2の画像データ群をロード
+    for filepath in list_imgs(SAVE_TESTDATA_DIR_PATH + "2"):
+        img = img_to_array(load_img(filepath, target_size=(img_width,img_height, img_ch)))
+        test_data_x.append(img)
+        test_data_y.append(2) # 教師データ（正解）
+    print("test_class3")   
+        # クラス3の画像データ群をロード
+    for filepath in list_imgs(SAVE_TESTDATA_DIR_PATH + "3"):
+        img = img_to_array(load_img(filepath, target_size=(img_width,img_height, img_ch)))
+        test_data_x.append(img)
+        test_data_y.append(3) # 教師データ（正解）
+    print("test_class4")    
+        # クラス4の画像データ群をロード
+    for filepath in list_imgs(SAVE_TESTDATA_DIR_PATH + "4"):
+        img = img_to_array(load_img(filepath, target_size=(img_width,img_height, img_ch)))
+        test_data_x.append(img)
+        test_data_y.append(4) # 教師データ（正解）
+    print("test_class5")
+        # クラス5の画像データ群をロード
+    for filepath in list_imgs(SAVE_TESTDATA_DIR_PATH + "5"):
+        img = img_to_array(load_img(filepath, target_size=(img_width,img_height, img_ch)))
+        test_data_x.append(img)
+        test_data_y.append(5) # 教師データ（正解）
+    print("test_class6")
+        # クラス6の画像データ群をロード
+    for filepath in list_imgs(SAVE_TESTDATA_DIR_PATH + "6"):
+        img = img_to_array(load_img(filepath, target_size=(img_width,img_height, img_ch)))
+        test_data_x.append(img)
+        test_data_y.append(6) # 教師データ（正解）
+    print("test_class7")
+        # クラス7の画像データ群をロード
+    for filepath in list_imgs(SAVE_TESTDATA_DIR_PATH + "7"):
+        img = img_to_array(load_img(filepath, target_size=(img_width,img_height, img_ch)))
+        test_data_x.append(img)
+        test_data_y.append(7) # 教師データ（正解）
+    print("test_class8")
+        # クラス8の画像データ群をロード
+    for filepath in list_imgs(SAVE_TESTDATA_DIR_PATH + "8"):
+        img = img_to_array(load_img(filepath, target_size=(img_width,img_height, img_ch)))
+        test_data_x.append(img)
+        test_data_y.append(8) # 教師データ（正解）
+    print("test_class9")
+        # クラス9の画像データ群をロード
+    for filepath in list_imgs(SAVE_TESTDATA_DIR_PATH + "9"):
+        img = img_to_array(load_img(filepath, target_size=(img_width,img_height, img_ch)))
+        test_data_x.append(img)
+        test_data_y.append(9) # 教師データ（正解）
+    print("test_class10")
+        # クラス9の画像データ群をロード
+    for filepath in list_imgs(SAVE_TESTDATA_DIR_PATH + "oya"):
+        img = img_to_array(load_img(filepath, target_size=(img_width,img_height, img_ch)))
+        test_data_x.append(img)
+        test_data_y.append(10) # 教師データ（正解）
+    print("test_class11")
+        # クラス9の画像データ群をロード
+    for filepath in list_imgs(SAVE_TESTDATA_DIR_PATH + "hitosashi"):
+        img = img_to_array(load_img(filepath, target_size=(img_width,img_height, img_ch)))
+        test_data_x.append(img)
+        test_data_y.append(11) # 教師データ（正解）
+    print("test_class12")
+        # クラス9の画像データ群をロード
+    for filepath in list_imgs(SAVE_TESTDATA_DIR_PATH + "naka"):
+        img = img_to_array(load_img(filepath, target_size=(img_width,img_height, img_ch)))
+        test_data_x.append(img)
+        test_data_y.append(12) # 教師データ（正解）
+    print("test_class13")
+        # クラス9の画像データ群をロード
+    for filepath in list_imgs(SAVE_TESTDATA_DIR_PATH + "kusuri"):
+        img = img_to_array(load_img(filepath, target_size=(img_width,img_height, img_ch)))
+        test_data_x.append(img)
+        test_data_y.append(13) # 教師データ（正解）
+    print("test_class14")
+        # クラス9の画像データ群をロード
+    for filepath in list_imgs(SAVE_TESTDATA_DIR_PATH + "ko"):
+        img = img_to_array(load_img(filepath, target_size=(img_width,img_height, img_ch)))
+        test_data_x.append(img)
+        test_data_y.append(14) # 教師データ（正解）
 
 
+#train validデータ読み込み
+    # クラス0の画像データ群をロード
     print("class0")
     for filepath in list_imgs(SAVE_DATA_DIR_PATH + "0"):
         img = img_to_array(load_img(filepath, target_size=(img_width,img_height, img_ch)))
         data_x.append(img)
         data_y.append(0) # 教師データ（正解）
-
     print("class1")
     # クラス1の画像データ群をロード
     for filepath in list_imgs(SAVE_DATA_DIR_PATH + "1"):
@@ -176,33 +270,35 @@ def main():
         data_y.append(14) # 教師データ（正解）
 
 
-    # NumPy配列に変換
-    data_x = np.asarray(data_x)
+# NumPy配列に変換
+    x_test = np.asarray(test_data_x)
+    x_train = np.asarray(data_x)
+# 学習データはNumPy配列に変換し
+    y_test = np.asarray(test_data_y)
+    y_train = np.asarray(data_y)
+    
 
-    # 学習データはNumPy配列に変換し
-    data_y = np.asarray(data_y)
+# 学習用データとテストデータに分割
+    # x_train, x_test, y_train, y_test = train_test_split(data_x, data_y, test_size=0.15)
 
-    # 学習用データとテストデータに分割
-    x_train, x_test, y_train, y_test = train_test_split(data_x, data_y, test_size=0.15)
-
-    # 学習データはfloat32型に変換し、正規化(0～1)
+# 学習データはfloat32型に変換し、正規化(0～1)
     x_train = x_train.astype('float32')
     x_test = x_test.astype('float32')
     x_train = x_train / 255.0
     x_test = x_test / 255.0
 
-    # 正解ラベルをone hotエンコーディング
+# 正解ラベルをone hotエンコーディング
     y_train = to_categorical(y_train, num_classes)
     y_test = to_categorical(y_test, num_classes)
 
-    # データセットの個数を表示
+# データセットの個数を表示
     print(x_train.shape, 'x train samples')
     print(x_test.shape, 'x test samples')
     print(y_train.shape, 'y train samples')
     print(y_test.shape, 'y test samples')
 
   
-    # モデルの構築
+# モデルの構築
     model = Sequential()
 
     # 入力層:16×16*2
@@ -210,31 +306,14 @@ def main():
     # Conv2D：2次元畳み込み層で、画像から特徴を抽出（活性化関数：relu）
     # 入力データにカーネルをかける（「2×2」の16種類のフィルタを各マスにかける）
     # 出力ユニット数：16（16枚分の出力データが得られる）
-    # model.add(Conv2D(16,(3,3), 
-    #             padding='same', 
-    #             input_shape=x_train.shape[1:],
-    #             activation='relu'))
-    # model.add(Conv2D(16,(3,3), 
-    #         padding='same', 
-    #         input_shape=x_train.shape[1:],
-    #         activation='relu'))
-    # model.add(Conv2D(16,(3,3), 
-    #         padding='same', 
-    #         input_shape=x_train.shape[1:],
-    #         activation='relu'))
-    # model.add(Conv2D(16,(3,3), 
-    #         padding='same', 
-    #         input_shape=x_train.shape[1:],
-    #         activation='relu'))
-    # model.add(Conv2D(16,(3,3), 
-    #         padding='same', 
-    #         input_shape=x_train.shape[1:],
-    #         activation='relu'))
-
-    # model.add(Conv2D(16,(3,3), 
-    #             padding='same', 
-    #             input_shape=x_train.shape[1:],
-    #             activation='relu'))
+    model.add(Conv2D(16,(3,3), 
+                padding='same', 
+                input_shape=x_train.shape[1:],
+                activation='relu'))
+    model.add(Conv2D(16,(3,3), 
+            padding='same', 
+            input_shape=x_train.shape[1:],
+            activation='relu'))
 
     # 【プーリング層】
     # 特徴量を圧縮する層。（ロバスト性向上、過学習防止、計算コスト抑制のため）
@@ -242,41 +321,41 @@ def main():
     # 画像の空間サイズの大きさを小さくし、調整するパラメーターの数を減らし、過学習を防止
     # pool_size=(2, 2):「2×2」の大きさの最大プーリング層。
     # 入力画像内の「2×2」の領域で最大の数値を出力。
-    # model.add(MaxPooling2D(pool_size=(2, 2)))
-
-    # # ドロップアウト(過学習防止用, dropout_rate=0.2なら20%のユニットを無効化）
-    # model.add(Dropout(dropout_rate))
-
-    # # 【2次元畳み込み層】
-    # # 画像から特徴を抽出（活性化関数：relu）
-    # # relu(ランプ関数)は、フィルタ後の入力データが0以下の時は出力0（入力が0より大きい場合はそのまま出力）
-    # # 入力データにカーネルをかける（「2×2」の16種類のフィルタを使う）
-    # # 出力ユニット数：16（16枚分の出力データが得られる）
-    # # 問題が複雑ならフィルタの種類を増やす
-    # model.add(Conv2D(16,(3,3),
-    #             padding='same',
-    #             activation='relu'))
-
-    # # 【2次元畳み込み層】
-    # # 画像から特徴を抽出（活性化関数：relu）
-    # # relu(ランプ関数)は、フィルタ後の入力データが0以下の時は出力0（入力が0より大きい場合はそのまま出力）
-    # # 入力データにカーネルをかける（「2×2」の16種類のフィルタを使う）
-    # # 出力ユニット数：16（16枚分の出力データが得られる）
-    # # 問題が複雑ならフィルタの種類を増やす
-    # model.add(Conv2D(16,(3,3),
-    #             padding='same',
-    #             activation='relu'))
-
-    # # 【プーリング層】
-    # # 特徴量を圧縮する層。（ロバスト性向上、過学習防止、計算コスト抑制のため）
-    # # 畳み込み層で抽出された特徴の位置感度を若干低下させ、対象とする特徴量の画像内での位置が若干変化した場合でもプーリング層の出力が普遍になるようにする。
-    # # 画像の空間サイズの大きさを小さくし、調整するパラメーターの数を減らし、過学習を防止
-    # # pool_size=(2, 2):「2×2」の大きさの最大プーリング層。
-    # # 入力画像内の「2×2」の領域で最大の数値を出力。
-    # model.add(MaxPooling2D(pool_size=(2, 2)))
+    model.add(MaxPooling2D(pool_size=(2, 2)))
 
     # ドロップアウト(過学習防止用, dropout_rate=0.2なら20%のユニットを無効化）
-    # model.add(Dropout(dropout_rate))
+    model.add(Dropout(dropout_rate))
+
+    # 【2次元畳み込み層】
+    # 画像から特徴を抽出（活性化関数：relu）
+    # relu(ランプ関数)は、フィルタ後の入力データが0以下の時は出力0（入力が0より大きい場合はそのまま出力）
+    # 入力データにカーネルをかける（「2×2」の16種類のフィルタを使う）
+    # 出力ユニット数：16（16枚分の出力データが得られる）
+    # 問題が複雑ならフィルタの種類を増やす
+    model.add(Conv2D(16,(3,3),
+                padding='same',
+                activation='relu'))
+
+    # 【2次元畳み込み層】
+    # 画像から特徴を抽出（活性化関数：relu）
+    # relu(ランプ関数)は、フィルタ後の入力データが0以下の時は出力0（入力が0より大きい場合はそのまま出力）
+    # 入力データにカーネルをかける（「2×2」の16種類のフィルタを使う）
+    # 出力ユニット数：16（16枚分の出力データが得られる）
+    # 問題が複雑ならフィルタの種類を増やす
+    model.add(Conv2D(16,(3,3),
+                padding='same',
+                activation='relu'))
+
+    # 【プーリング層】
+    # 特徴量を圧縮する層。（ロバスト性向上、過学習防止、計算コスト抑制のため）
+    # 畳み込み層で抽出された特徴の位置感度を若干低下させ、対象とする特徴量の画像内での位置が若干変化した場合でもプーリング層の出力が普遍になるようにする。
+    # 画像の空間サイズの大きさを小さくし、調整するパラメーターの数を減らし、過学習を防止
+    # pool_size=(2, 2):「2×2」の大きさの最大プーリング層。
+    # 入力画像内の「2×2」の領域で最大の数値を出力。
+    model.add(MaxPooling2D(pool_size=(2, 2)))
+
+    # ドロップアウト(過学習防止用, dropout_rate=0.2なら20%のユニットを無効化）
+    model.add(Dropout(dropout_rate))
 
     # 平坦化（次元削減）
     # 1次元ベクトルに変換
@@ -310,7 +389,7 @@ def main():
                         batch_size=batch_size, 
                         epochs=epochs, 
                         verbose=1, 
-                        validation_split=0.15)
+                        validation_split=0.2)
 
     # テスト用データセットで学習済分類器に入力し、パフォーマンスを計測
     score = model.evaluate(x_test, 

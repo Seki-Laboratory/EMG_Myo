@@ -21,12 +21,15 @@ class Emg(myo.DeviceListener):
     self.label = int(0)
     self.stop = 0
     # print("ジェスチャ",self.label,"の学習データを取得します。")
+
   
   def on_connected(self, event):
       event.device.stream_emg(True)
 
   def on_emg(self,event):
+
     self.emg = np.array(event.emg)**2
+
 #_____________Mode0_Moving_RMS_________________________
     if self.mode == 0:
       self.emg = np.reshape(self.emg,(1,8))
@@ -47,6 +50,7 @@ class Emg(myo.DeviceListener):
         #     writer = csv.writer(f, lineterminator='\n') # 行末は改行
         #     writer.writerow(sqrt)
         #   self.i += 1
+
         if self.i <= 39:
             with open('MRMSdata.csv', 'a') as f:
               writer = csv.writer(f, lineterminator='\n') # 行末は改行
@@ -57,6 +61,8 @@ class Emg(myo.DeviceListener):
             event.device.stream_emg(False)
             print("ジェスチャ",self.label,"の学習データを取得しました。  [続行 = Enter][終了 = Esc] ")
             # winsound.PlaySound("sound/3.wav", winsound.SND_FILENAME)
+
+
             while True:
               key = ord(getch())
               if key == 13:
@@ -64,6 +70,7 @@ class Emg(myo.DeviceListener):
                 self.label += 1
                 print("ジェスチャ",self.label,"の学習データを取得します。")
                 event.device.stream_emg(True)
+
                 self.i = 0
                 break
               elif key == 27:
@@ -121,7 +128,7 @@ def main():
   myo.init(bin_path=r'./bin')
   hub = myo.Hub()  #myoモジュールのHubクラスのインスタンス
   hub1 = myo.Hub()
-  listener = Emg(mode=1) #emgクラスのインスタンス (mode0 = Moving_RMS) (mode1 = RMS)
+  listener = Emg(mode=0) #emgクラスのインスタンス (mode0 = Moving_RMS) (mode1 = RMS)
   listener1 = myo.ApiDeviceListener()
   # winsound.PlaySound("sound/1.wav", winsound.SND_FILENAME)
   # winsound.PlaySound("sound/2.wav", winsound.SND_FILENAME)
