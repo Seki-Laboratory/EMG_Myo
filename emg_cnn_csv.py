@@ -30,29 +30,35 @@ class Emg(myo.DeviceListener):
     self.j = 0
     self.list = 0
     self.n =0
+    self.geta127 = [128,128,128,128,128,128,128,128]
     #_____cnn_init________
     # データの保存先(自分の環境に応じて適宜変更)
-    SAVE_DATA_DIR_PATH = "C:/Users/usui0/Desktop/2021_sekilab_data/csv2/"
+    SAVE_DATA_DIR_PATH = "C:/Users/usui0/Desktop/2021_sekilab_data/law2/"
     # ラベル
     print("ok")
-    #self.labels =['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'oya', 'hitosashi', 'naka', 'kusuri', 'ko',"mu"]
-    self.labels =['oya', 'hitosashi', 'naka', 'kusuri', 'ko',"mu"]
+    self.labels =['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'oya', 'hitosashi', 'naka', 'kusuri', 'ko',"mu"]
+    # self.labels =['oya', 'hitosashi', 'naka', 'kusuri', 'ko',"mu"]
     # 保存したモデル構造の読み込み
-    self.model = model_from_json(open(SAVE_DATA_DIR_PATH+"model.json", 'r').read())
+    self.model = model_from_json(open(SAVE_DATA_DIR_PATH+"lawmodel.json", 'r').read())
     print("ok")
     # 保存した学習済みの重みを読み込み
-    self.model.load_weights(SAVE_DATA_DIR_PATH + "weight.h5")
+    self.model.load_weights(SAVE_DATA_DIR_PATH + "lawweight.h5")
     print("モデルと重みの読み込み完了")
+
+    
+
+  
 
   def on_connected(self, event):
       event.device.stream_emg(True)
 
   def on_emg(self,event):
     start = time.time()
-    self.emg = np.array(event.emg)**2
+
     
 #_____________Mode0_Moving_RMS_________________________
     if self.mode == 0:
+      self.emg = np.array(event.emg)**2
       self.emg = np.reshape(self.emg,(1,8))
 #_____________rms_calc      
       if self.add.shape[0] <= 21:
@@ -75,29 +81,23 @@ class Emg(myo.DeviceListener):
           img=img_to_array(pil_image)
           img = img.astype('float32')/255.0
           img = np.array([img])
-  # # 分類機に入力データを与えて予測（出力：各クラスの予想確率）
-  #         y_pred = self.model.predict(img)
-  #         t = time.time()-start
-  # # 最も確率の高い要素番号
-  #         number_pred = np.argmax(y_pred) 
-  #         print("認識結果",self.labels[int(number_pred)])
+  # 分類機に入力データを与えて予測（出力：各クラスの予想確率）
+          y_pred = self.model.predict(img)
+  # 最も確率の高い要素番号
+          number_pred = np.argmax(y_pred) 
+          print("認識結果",self.labels[int(number_pred)])
 
+  # #読み飛ばし  
+  #         if 0 == self.n%2:
+  #     # 分類機に入力データを与えて予測（出力：各クラスの予想確率）
+  #             y_pred = self.model.predict(img)
+  #             t = time.time()-start
+  #     # 最も確率の高い要素番号
+  #             number_pred = np.argmax(y_pred) 
+  #             print("認識結果",self.labels[int(number_pred)])
+  #             self.n = 0
+  #         self.n = self.n+1
 
-
-  #読み飛ばし  
-          if 0 == self.n%2:
-      # 分類機に入力データを与えて予測（出力：各クラスの予想確率）
-              y_pred = self.model.predict(img)
-              t = time.time()-start
-      # 最も確率の高い要素番号
-              number_pred = np.argmax(y_pred) 
-              print("認識結果",self.labels[int(number_pred)])
-              self.n = 0
-          self.n = self.n+1
-              
-'''条件付き確率追加してみる'''
-'''タイトル２４日'''
-    
         # self.element = np.append(self.element,result)
         # if len(self.element) == 16:
         #   c = collections.Counter(self.element[1:])
@@ -111,13 +111,49 @@ class Emg(myo.DeviceListener):
         #     pass
         #   self.element = np.delete(self.element,1)
 
+#______________Mode1_Law_EMG
+    if self.mode == 1:
+      self.emg = np.array(event.emg)
+      gemg = self.emg+self.geta127
+      gemg = np.reshape(gemg,(1,8))
+
+      if self.rms_add.shape[0] <= 101:
+        self.rms_add = np.append(self.rms_add,gemg,axis=0)
+      else:
+        self.rms_add = np.delete(self.rms_add, 1, 0)
+        rms_list = np.round(self.rms_add[1:],decimals=2)
+
+        pil_image = Image.fromarray(np.rot90(np.uint8(rms_list)))
+        img=img_to_array(pil_image)
+        img = img.astype('float32')/255.0
+        img = np.array([img])
+# 分類機に入力データを与えて予測（出力：各クラスの予想確率）
+        y_pred = self.model.predict(img)
+# 最も確率の高い要素番号
+        number_pred = np.argmax(y_pred) 
+        print("認識結果",self.labels[int(number_pred)])
+
+        # self.element = np.append(self.element,number_pred)
+        # if len(self.element) == 21:
+        #   c = collections.Counter(self.element[1:])
+        #   # print(c.most_common()[0])
+        #   list = c.most_common()[0]
+        #   if list[1] == 20:
+        #     list_c = int(list[0])
+        #     print("認識結果",self.labels[list_c])
+        #   else:
+        #     print("認識結果","none")
+        #     pass
+        #   self.element = np.delete(self.element,1)
+
+
 
 
 #main関数
 def main():
   myo.init(bin_path=r'./bin')
   hub = myo.Hub()  #myoモジュールのHubクラスのインスタンス
-  listener = Emg(mode=0) #emgクラスのインスタンス (mode0 = Moving_RMS) (mode1 = RMS)
+  listener = Emg(mode=1) #emgクラスのインスタンス (mode0 = Moving_RMS) (mode1 = law_EMG)
   try:
     start = time.time()
     while hub.run(listener.on_event,5):

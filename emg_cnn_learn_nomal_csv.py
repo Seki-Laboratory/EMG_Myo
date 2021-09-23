@@ -61,7 +61,7 @@ def plot_history(history,
 def main():
     # パラメータ
     batch_size = 5 # バッチサイズ
-    num_classes = 6 # 分類クラス数(今回は15種類)
+    num_classes = 16 # 分類クラス数(今回は15種類)
     epochs = 100     # エポック数(学習の繰り返し回数)
     dropout_rate = 0.2 # 過学習防止用：入力の20%を0にする（破棄）
 
@@ -71,7 +71,7 @@ def main():
 
 
     # データ格納用のディレクトリパス
-    SAVE_DATA_DIR_PATH = "C:/Users/usui0/Desktop/2021_sekilab_data/csv2/"
+    SAVE_DATA_DIR_PATH = "C:/Users/usui0/Desktop/2021_sekilab_data/law2/"
     SAVE_DATA_DIR_PATH1 = "img/"
     # ディレクトリがなければ作成
     os.makedirs(SAVE_DATA_DIR_PATH, exist_ok=True)
@@ -83,103 +83,103 @@ def main():
 
     data_x = []
     data_y = []
-    num_classes = 6
+    num_classes = 16
 
-    # # クラス0の画像データ群をロード
+    # クラス0の画像データ群をロード
         
-    # print("class0")
+    print("class0")
 
 
-    # for filepath in list_csv(SAVE_DATA_DIR_PATH + "0"):
-    #     List=np.loadtxt(filepath, delimiter=',')
-    #     Listcut=np.array(List [:,0:8])
-    #     pil_image = Image.fromarray(np.rot90(np.uint8(Listcut)))
-    #     img=img_to_array(pil_image)
-    #     data_x.append(img)
-    #     data_y.append(0) # 教師データ（正解）
+    for filepath in list_csv(SAVE_DATA_DIR_PATH + "0"):
+        List=np.loadtxt(filepath, delimiter=',')
+        Listcut=np.array(List [:,0:8])
+        pil_image = Image.fromarray(np.rot90(np.uint8(Listcut)))
+        img=img_to_array(pil_image)
+        data_x.append(img)
+        data_y.append(0) # 教師データ（正解）
 
 
-    # print("class1")
-    # # クラス1の画像データ群をロード
-    # for filepath in list_csv(SAVE_DATA_DIR_PATH + "1"):
-    #     List=np.loadtxt(filepath, delimiter=',')
-    #     Listcut=np.array(List [:,0:8])
-    #     pil_image = Image.fromarray(np.rot90(np.uint8(Listcut)))
-    #     img=img_to_array(pil_image)
-    #     data_x.append(img)
-    #     data_y.append(1) # 教師データ（正解）
-    # print("class2")
-    # # クラス2の画像データ群をロード
-    # for filepath in list_csv(SAVE_DATA_DIR_PATH + "2"):
-    #     List=np.loadtxt(filepath, delimiter=',')
-    #     Listcut=np.array(List [:,0:8])
-    #     pil_image = Image.fromarray(np.rot90(np.uint8(Listcut)))
-    #     img=img_to_array(pil_image)
-    #     data_x.append(img)
-    #     data_y.append(2) # 教師データ（正解）
-    # print("class3")   
-    #     # クラス3の画像データ群をロード
-    # for filepath in list_csv(SAVE_DATA_DIR_PATH + "3"):
-    #     List=np.loadtxt(filepath, delimiter=',')
-    #     Listcut=np.array(List [:,0:8])
-    #     pil_image = Image.fromarray(np.rot90(np.uint8(Listcut)))
-    #     img=img_to_array(pil_image)
-    #     data_x.append(img)
-    #     data_y.append(3) # 教師データ（正解）
-    # print("class4")    
-    #     # クラス4の画像データ群をロード
-    # for filepath in list_csv(SAVE_DATA_DIR_PATH + "4"):
-    #     List=np.loadtxt(filepath, delimiter=',')
-    #     Listcut=np.array(List [:,0:8])
-    #     pil_image = Image.fromarray(np.rot90(np.uint8(Listcut)))
-    #     img=img_to_array(pil_image)
-    #     data_x.append(img)
-    #     data_y.append(4) # 教師データ（正解）
-    # print("class5")
-    #     # クラス5の画像データ群をロード
-    # for filepath in list_csv(SAVE_DATA_DIR_PATH + "5"):
-    #     List=np.loadtxt(filepath, delimiter=',')
-    #     Listcut=np.array(List [:,0:8])
-    #     pil_image = Image.fromarray(np.rot90(np.uint8(Listcut)))
-    #     img=img_to_array(pil_image)
-    #     data_x.append(img)
-    #     data_y.append(5) # 教師データ（正解）
-    # print("class6")
-    #     # クラス6の画像データ群をロード
-    # for filepath in list_csv(SAVE_DATA_DIR_PATH + "6"):
-    #     List=np.loadtxt(filepath, delimiter=',')
-    #     Listcut=np.array(List [:,0:8])
-    #     pil_image = Image.fromarray(np.rot90(np.uint8(Listcut)))
-    #     img=img_to_array(pil_image)
-    #     data_x.append(img)
-    #     data_y.append(6) # 教師データ（正解）
-    # print("class7")
-    #     # クラス7の画像データ群をロード
-    # for filepath in list_csv(SAVE_DATA_DIR_PATH + "7"):
-    #     List=np.loadtxt(filepath, delimiter=',')
-    #     Listcut=np.array(List [:,0:8])
-    #     pil_image = Image.fromarray(np.rot90(np.uint8(Listcut)))
-    #     img=img_to_array(pil_image)
-    #     data_x.append(img)
-    #     data_y.append(7) # 教師データ（正解）
-    # print("class8")
-    #     # クラス8の画像データ群をロード
-    # for filepath in list_csv(SAVE_DATA_DIR_PATH + "8"):
-    #     List=np.loadtxt(filepath, delimiter=',')
-    #     Listcut=np.array(List [:,0:8])
-    #     pil_image = Image.fromarray(np.rot90(np.uint8(Listcut)))
-    #     img=img_to_array(pil_image)
-    #     data_x.append(img)
-    #     data_y.append(8) # 教師データ（正解）
-    # print("class9")
-    #     # クラス9の画像データ群をロード
-    # for filepath in list_csv(SAVE_DATA_DIR_PATH + "9"):
-    #     List=np.loadtxt(filepath, delimiter=',')
-    #     Listcut=np.array(List [:,0:8])
-    #     pil_image = Image.fromarray(np.rot90(np.uint8(Listcut)))
-    #     img=img_to_array(pil_image)
-    #     data_x.append(img)
-    #     data_y.append(9) # 教師データ（正解）
+    print("class1")
+    # クラス1の画像データ群をロード
+    for filepath in list_csv(SAVE_DATA_DIR_PATH + "1"):
+        List=np.loadtxt(filepath, delimiter=',')
+        Listcut=np.array(List [:,0:8])
+        pil_image = Image.fromarray(np.rot90(np.uint8(Listcut)))
+        img=img_to_array(pil_image)
+        data_x.append(img)
+        data_y.append(1) # 教師データ（正解）
+    print("class2")
+    # クラス2の画像データ群をロード
+    for filepath in list_csv(SAVE_DATA_DIR_PATH + "2"):
+        List=np.loadtxt(filepath, delimiter=',')
+        Listcut=np.array(List [:,0:8])
+        pil_image = Image.fromarray(np.rot90(np.uint8(Listcut)))
+        img=img_to_array(pil_image)
+        data_x.append(img)
+        data_y.append(2) # 教師データ（正解）
+    print("class3")   
+        # クラス3の画像データ群をロード
+    for filepath in list_csv(SAVE_DATA_DIR_PATH + "3"):
+        List=np.loadtxt(filepath, delimiter=',')
+        Listcut=np.array(List [:,0:8])
+        pil_image = Image.fromarray(np.rot90(np.uint8(Listcut)))
+        img=img_to_array(pil_image)
+        data_x.append(img)
+        data_y.append(3) # 教師データ（正解）
+    print("class4")    
+        # クラス4の画像データ群をロード
+    for filepath in list_csv(SAVE_DATA_DIR_PATH + "4"):
+        List=np.loadtxt(filepath, delimiter=',')
+        Listcut=np.array(List [:,0:8])
+        pil_image = Image.fromarray(np.rot90(np.uint8(Listcut)))
+        img=img_to_array(pil_image)
+        data_x.append(img)
+        data_y.append(4) # 教師データ（正解）
+    print("class5")
+        # クラス5の画像データ群をロード
+    for filepath in list_csv(SAVE_DATA_DIR_PATH + "5"):
+        List=np.loadtxt(filepath, delimiter=',')
+        Listcut=np.array(List [:,0:8])
+        pil_image = Image.fromarray(np.rot90(np.uint8(Listcut)))
+        img=img_to_array(pil_image)
+        data_x.append(img)
+        data_y.append(5) # 教師データ（正解）
+    print("class6")
+        # クラス6の画像データ群をロード
+    for filepath in list_csv(SAVE_DATA_DIR_PATH + "6"):
+        List=np.loadtxt(filepath, delimiter=',')
+        Listcut=np.array(List [:,0:8])
+        pil_image = Image.fromarray(np.rot90(np.uint8(Listcut)))
+        img=img_to_array(pil_image)
+        data_x.append(img)
+        data_y.append(6) # 教師データ（正解）
+    print("class7")
+        # クラス7の画像データ群をロード
+    for filepath in list_csv(SAVE_DATA_DIR_PATH + "7"):
+        List=np.loadtxt(filepath, delimiter=',')
+        Listcut=np.array(List [:,0:8])
+        pil_image = Image.fromarray(np.rot90(np.uint8(Listcut)))
+        img=img_to_array(pil_image)
+        data_x.append(img)
+        data_y.append(7) # 教師データ（正解）
+    print("class8")
+        # クラス8の画像データ群をロード
+    for filepath in list_csv(SAVE_DATA_DIR_PATH + "8"):
+        List=np.loadtxt(filepath, delimiter=',')
+        Listcut=np.array(List [:,0:8])
+        pil_image = Image.fromarray(np.rot90(np.uint8(Listcut)))
+        img=img_to_array(pil_image)
+        data_x.append(img)
+        data_y.append(8) # 教師データ（正解）
+    print("class9")
+        # クラス9の画像データ群をロード
+    for filepath in list_csv(SAVE_DATA_DIR_PATH + "9"):
+        List=np.loadtxt(filepath, delimiter=',')
+        Listcut=np.array(List [:,0:8])
+        pil_image = Image.fromarray(np.rot90(np.uint8(Listcut)))
+        img=img_to_array(pil_image)
+        data_x.append(img)
+        data_y.append(9) # 教師データ（正解）
 
     print("class10")
         # クラス9の画像データ群をロード
@@ -189,7 +189,7 @@ def main():
         pil_image = Image.fromarray(np.rot90(np.uint8(Listcut)))
         img=img_to_array(pil_image)
         data_x.append(img)
-        data_y.append(0) # 教師データ（正解）
+        data_y.append(10) # 教師データ（正解）
     print("class11")
         # クラス9の画像データ群をロード
     for filepath in list_csv(SAVE_DATA_DIR_PATH + "hitosashi"):
@@ -198,7 +198,7 @@ def main():
         pil_image = Image.fromarray(np.rot90(np.uint8(Listcut)))
         img=img_to_array(pil_image)
         data_x.append(img)
-        data_y.append(1) # 教師データ（正解）
+        data_y.append(11) # 教師データ（正解）
     print("class12")
         # クラス9の画像データ群をロード
     for filepath in list_csv(SAVE_DATA_DIR_PATH + "naka"):
@@ -207,7 +207,7 @@ def main():
         pil_image = Image.fromarray(np.rot90(np.uint8(Listcut)))
         img=img_to_array(pil_image)
         data_x.append(img)
-        data_y.append(2) # 教師データ（正解）
+        data_y.append(12) # 教師データ（正解）
     print("class13")
         # クラス9の画像データ群をロード
     for filepath in list_csv(SAVE_DATA_DIR_PATH + "kusuri"):
@@ -216,7 +216,7 @@ def main():
         pil_image = Image.fromarray(np.rot90(np.uint8(Listcut)))
         img=img_to_array(pil_image)
         data_x.append(img)
-        data_y.append(3) # 教師データ（正解）
+        data_y.append(13) # 教師データ（正解）
     print("class14")
         # クラス9の画像データ群をロード
     for filepath in list_csv(SAVE_DATA_DIR_PATH + "ko"):
@@ -225,7 +225,7 @@ def main():
         pil_image = Image.fromarray(np.rot90(np.uint8(Listcut)))
         img=img_to_array(pil_image)
         data_x.append(img)
-        data_y.append(4) # 教師データ（正解）
+        data_y.append(14) # 教師データ（正解）
     
     print("class15")
         # クラス9の画像データ群をロード
@@ -235,7 +235,7 @@ def main():
         pil_image = Image.fromarray(np.rot90(np.uint8(Listcut)))
         img=img_to_array(pil_image)
         data_x.append(img)
-        data_y.append(5) # 教師データ（正解）
+        data_y.append(15) # 教師データ（正解）
 
 
     # NumPy配列に変換
@@ -364,13 +364,13 @@ def main():
     #             lim_font_size = FIG_FONT_SIZE)
 
     # モデル構造の保存
-    open(SAVE_DATA_DIR_PATH  + "model.json","w").write(model.to_json())  
+    open(SAVE_DATA_DIR_PATH  + "lawmodel.json","w").write(model.to_json())  
 
     # 学習済みの重みを保存
-    model.save_weights(SAVE_DATA_DIR_PATH + "weight.h5")
+    model.save_weights(SAVE_DATA_DIR_PATH + "lawweight.h5")
 
     # 学習履歴を保存
-    with open(SAVE_DATA_DIR_PATH + "history.json", 'wb') as f:
+    with open(SAVE_DATA_DIR_PATH + "lawhistory.json", 'wb') as f:
         pickle.dump(history.history, f)
 
 
