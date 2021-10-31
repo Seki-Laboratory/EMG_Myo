@@ -38,7 +38,7 @@ class Emg(myo.DeviceListener):
 
   def on_emg(self,event):
     SAVE_DATA_DIR_PATH = "C:/Users/usui0/Desktop/2021_sekilab_data/law2/"
-    JES = "mu"
+    JES = "hitosashi_oya"
 
     self.emg = np.array(event.emg)
     #myo_armbandは8bit(-128~127)の値を返すので127足して基準位置をずらします。

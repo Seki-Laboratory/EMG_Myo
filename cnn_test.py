@@ -53,66 +53,63 @@ from tensorflow.keras.utils import to_categorical
 from tensorflow.keras.preprocessing.image import load_img, img_to_array
 from PIL import Image
 import time
+import csv
 
 
 def main():
-    # 入力画像のパラメータ
-    img_width = 32 # 入力画像の幅
-    img_height = 32 # 入力画像の高さ
-    img_ch = 3 # 3ch画像（RGB）
-
-    # 入力データ数
-    num_data = 1
-
     # データの保存先(自分の環境に応じて適宜変更)
-    SAVE_DATA_DIR_PATH = "C:/Users/usui0/Desktop/2021_sekilab_data/csv2/"
-
+    SAVE_DATA_DIR_PATH = "C:/Users/usui0/Desktop/2021_sekilab_data/law2/"
+    TEST_DATA_DIR_PATH = "C:/Users/usui0/Desktop/2021_sekilab_data/law2/test/"
     # ラベル
     labels =['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'oya', 'hitosashi', 'naka', 'kusuri', 'ko','mu']
+    labels1 =['oya-hitosashi', 'oya-naka', 'oya-kusuri', 'oya-ko','oya','mu']
+    labels2 =['oya-hitosashi', 'hitosashi-naka', 'hitosashi-kusuri', 'hitosashi-ko','hitosashi','mu'] 
+    labels3 =['oya-naka','hitosashi-naka','naka-kusurui','naka-ko','naka','mu']
+    labels4 =['oya-kusuri','hitosashi-kusuri','naka-kusuri','kusuri-ko','kusuri','mu']
+    labels5 =['oya-ko','hitosashi-ko','naka-ko','kusuri-ko','ko','mu']
+    
 
     # 保存したモデル構造の読み込み
-    model = model_from_json(open(SAVE_DATA_DIR_PATH + "model.json", 'r').read())
+    model = model_from_json(open(SAVE_DATA_DIR_PATH + "lawmodel.json", 'r').read())
     print("model_read_ok")
     # 保存した学習済みの重みを読み込み
-    model.load_weights(SAVE_DATA_DIR_PATH + "weight.h5")
+    model.load_weights(SAVE_DATA_DIR_PATH + "lawweight.h5")
     print("weights_read_ok")
-    # 画像の読み込み（32×32にリサイズ）
-    # 正規化, 4次元配列に変換（モデルの入力が4次元なので合わせる）
+    #　1秒待機
     time.sleep(1)
-    for i in labels:
-        start = time.time()
 
-        List=np.loadtxt('csv/'+str(i)+'/MRMSdata20.csv', delimiter=',')
-        Listcut=np.array(List [:,0:8])
-        pil_image = Image.fromarray(np.rot90(np.uint8(Listcut)))
+    #テストデータ読み込み
+    List=np.loadtxt(TEST_DATA_DIR_PATH+'test_emgdata0.csv', delimiter=',')
+    Listcut=np.array(List [:,0:8])
+    print(Listcut)
+
+
+    for i in range(100,900):
+        Listcut1 = Listcut[0+i:100+i,:]
+
+        pil_image = Image.fromarray(np.rot90(np.uint8(Listcut1)))
         img=img_to_array(pil_image)
-
         img = img.astype('float32')/255.0
         img = np.array([img])
 
     # y_pred = model.predict(img)
         y_pred = model.predict(img)
-        t = time.time()-start
+        # 最も確率の高い要素番号
         number_pred = np.argmax(y_pred) 
-        print("入力画像番号",i,"|","処理時間",t,"|","認識結果", number_pred)
+        # 予測結果の表示
+        # print("y_pred:", y_pred)  # 出力値
+        # print("number_pred:", number_pred)  # 最も確率の高い要素番号
+        result=[labels1[int(number_pred)]]
+        print('認識結果：',result) # 予想ラベル（最も確率の高い要素）
 
-    
+        with open(TEST_DATA_DIR_PATH+'result.csv', 'a') as f:
+            writer = csv.writer(f, lineterminator='\n') # 行末は改行
+            writer.writerow(result)
 
-    # 最も確率の高い要素番号
-    number_pred = np.argmax(y_pred) 
+    #     result = np.append(result,b,axis=0)
 
-    # 予測結果の表示
+    # np.savetxt(TEST_DATA_DIR_PATH+'result.csv',result, delimiter=',', fmt='%d')
 
-    print("y_pred:", y_pred)  # 出力値
-    print("number_pred:", number_pred)  # 最も確率の高い要素番号
-    print('label_pred：', labels[int(number_pred)]) # 予想ラベル（最も確率の高い要素）
-
-
-    """
-    predict_y: [[1.2638741e-20 4.6908645e-21 1.0000000e+00]]
-    predict_number: 2
-    predict_label： マグカップ
-    """
 
 
 if __name__ == '__main__':
