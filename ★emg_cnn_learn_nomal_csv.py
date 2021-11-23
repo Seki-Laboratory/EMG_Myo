@@ -66,7 +66,9 @@ def main():
     dropout_rate = 0.2 # 過学習防止用：入力の20%を0にする（破棄）
 
     # データ格納用のディレクトリパス
-    SAVE_DATA_DIR_PATH = "C:/Users/usui0/Desktop/2021_sekilab_data/law2/"
+    # SAVE_DATA_DIR_PATH = "C:/Users/usui0/Desktop/2021_sekilab_data/law2/"
+    SAVE_DATA_DIR_PATH = "C:/Users/usui0/Desktop/data/"
+
     SAVE_DATA_DIR_PATH1 = "img/"
     # ディレクトリがなければ作成
     os.makedirs(SAVE_DATA_DIR_PATH, exist_ok=True)
@@ -80,14 +82,14 @@ def main():
     data_y = []
     num_classes = 6
 # #親指
-#     print("oya")
-#     for filepath in list_csv(SAVE_DATA_DIR_PATH + "oya"):
-#         List=np.loadtxt(filepath, delimiter=',')
-#         Listcut=np.array(List [:,0:8])
-#         pil_image = Image.fromarray(np.rot90(np.uint8(Listcut)))
-#         img=img_to_array(pil_image)
-#         data_x.append(img)
-#         data_y.append(0) # 教師データ（正解）
+    print("oya")
+    for filepath in list_csv(SAVE_DATA_DIR_PATH + "oya"):
+        List=np.loadtxt(filepath, delimiter=',')
+        Listcut=np.array(List [:,:])
+        pil_image = Image.fromarray(np.rot90(np.uint8(Listcut)))
+        img=img_to_array(pil_image)
+        data_x.append(img)
+        data_y.append(0) # 教師データ（正解）
     
 #     print("oya_hitosashi")
 #     for filepath in list_csv(SAVE_DATA_DIR_PATH + "oya_hitosashi"):
@@ -134,14 +136,14 @@ def main():
 #         data_x.append(img)
 #         data_y.append(5) # 教師データ（正解）
 # #人差し指    
-#     print("hitosashi")
-#     for filepath in list_csv(SAVE_DATA_DIR_PATH + "hitosashi"):
-#         List=np.loadtxt(filepath, delimiter=',')
-#         Listcut=np.array(List [:,0:8])
-#         pil_image = Image.fromarray(np.rot90(np.uint8(Listcut)))
-#         img=img_to_array(pil_image)
-#         data_x.append(img)
-#         data_y.append(0) # 教師データ（正解）
+    print("hitosashi")
+    for filepath in list_csv(SAVE_DATA_DIR_PATH + "hitosashi"):
+        List=np.loadtxt(filepath, delimiter=',')
+        Listcut=np.array(List [:,:])
+        pil_image = Image.fromarray(np.rot90(np.uint8(Listcut)))
+        img=img_to_array(pil_image)
+        data_x.append(img)
+        data_y.append(1) # 教師データ（正解）
 
 #     print("hitosashi_oya")
 #     for filepath in list_csv(SAVE_DATA_DIR_PATH + "hitosashi_oya"):
@@ -188,15 +190,15 @@ def main():
 #         data_x.append(img)
 #         data_y.append(5) # 教師データ（正解）
 
-# #中指
-#     print("naka")
-#     for filepath in list_csv(SAVE_DATA_DIR_PATH + "naka"):
-#         List=np.loadtxt(filepath, delimiter=',')
-#         Listcut=np.array(List [:,0:8])
-#         pil_image = Image.fromarray(np.rot90(np.uint8(Listcut)))
-#         img=img_to_array(pil_image)
-#         data_x.append(img)
-#         data_y.append(0) # 教師データ（正解）
+#中指
+    print("naka")
+    for filepath in list_csv(SAVE_DATA_DIR_PATH + "naka"):
+        List=np.loadtxt(filepath, delimiter=',')
+        Listcut=np.array(List [:,:])
+        pil_image = Image.fromarray(np.rot90(np.uint8(Listcut)))
+        img=img_to_array(pil_image)
+        data_x.append(img)
+        data_y.append(2) # 教師データ（正解）
 
 #     print("naka_oya")
 #     for filepath in list_csv(SAVE_DATA_DIR_PATH + "naka_oya"):
@@ -243,15 +245,15 @@ def main():
 #         data_x.append(img)
 #         data_y.append(5) # 教師データ（正解）
 
-# #薬指
-#     print("kusuri")
-#     for filepath in list_csv(SAVE_DATA_DIR_PATH + "kusuri"):
-#         List=np.loadtxt(filepath, delimiter=',')
-#         Listcut=np.array(List [:,0:8])
-#         pil_image = Image.fromarray(np.rot90(np.uint8(Listcut)))
-#         img=img_to_array(pil_image)
-#         data_x.append(img)
-#         data_y.append(0) # 教師データ（正解）
+#薬指
+    print("kusuri")
+    for filepath in list_csv(SAVE_DATA_DIR_PATH + "kusuri"):
+        List=np.loadtxt(filepath, delimiter=',')
+        Listcut=np.array(List [:,:])
+        pil_image = Image.fromarray(np.rot90(np.uint8(Listcut)))
+        img=img_to_array(pil_image)
+        data_x.append(img)
+        data_y.append(3) # 教師データ（正解）
 
 #     print("kusuri_oya")
 #     for filepath in list_csv(SAVE_DATA_DIR_PATH + "kusuri_oya"):
@@ -298,15 +300,15 @@ def main():
 #         data_x.append(img)
 #         data_y.append(5) # 教師データ（正解）
 
-# #小指
-#     print("ko")
-#     for filepath in list_csv(SAVE_DATA_DIR_PATH + "ko"):
-#         List=np.loadtxt(filepath, delimiter=',')
-#         Listcut=np.array(List [:,0:8])
-#         pil_image = Image.fromarray(np.rot90(np.uint8(Listcut)))
-#         img=img_to_array(pil_image)
-#         data_x.append(img)
-#         data_y.append(0) # 教師データ（正解）
+#小指
+    print("ko")
+    for filepath in list_csv(SAVE_DATA_DIR_PATH + "ko"):
+        List=np.loadtxt(filepath, delimiter=',')
+        Listcut=np.array(List [:,:])
+        pil_image = Image.fromarray(np.rot90(np.uint8(Listcut)))
+        img=img_to_array(pil_image)
+        data_x.append(img)
+        data_y.append(4) # 教師データ（正解）
 
 #     print("ko_oya")
 #     for filepath in list_csv(SAVE_DATA_DIR_PATH + "ko_oya"):
@@ -357,56 +359,56 @@ def main():
     print("mu")
     for filepath in list_csv(SAVE_DATA_DIR_PATH + "mu"):
         List=np.loadtxt(filepath, delimiter=',')
-        Listcut=np.array(List [:,0:8])
-        pil_image = Image.fromarray(np.rot90(np.uint8(Listcut)))
-        img=img_to_array(pil_image)
-        data_x.append(img)
-        data_y.append(0) # 教師データ（正解）
-
-    print("mu_oya")
-    for filepath in list_csv(SAVE_DATA_DIR_PATH + "mu_oya"):
-        List=np.loadtxt(filepath, delimiter=',')
-        Listcut=np.array(List [:,0:8])
-        pil_image = Image.fromarray(np.rot90(np.uint8(Listcut)))
-        img=img_to_array(pil_image)
-        data_x.append(img)
-        data_y.append(1) # 教師データ（正解）
-
-    print("mu_hitosashi")
-    for filepath in list_csv(SAVE_DATA_DIR_PATH + "mu_hitosashi"):
-        List=np.loadtxt(filepath, delimiter=',')
-        Listcut=np.array(List [:,0:8])
-        pil_image = Image.fromarray(np.rot90(np.uint8(Listcut)))
-        img=img_to_array(pil_image)
-        data_x.append(img)
-        data_y.append(2) # 教師データ（正解）
-
-    print("mu_naka")
-    for filepath in list_csv(SAVE_DATA_DIR_PATH + "mu_naka"):
-        List=np.loadtxt(filepath, delimiter=',')
-        Listcut=np.array(List [:,0:8])
-        pil_image = Image.fromarray(np.rot90(np.uint8(Listcut)))
-        img=img_to_array(pil_image)
-        data_x.append(img)
-        data_y.append(3) # 教師データ（正解）
-
-    print("mu_kusuri")
-    for filepath in list_csv(SAVE_DATA_DIR_PATH + "mu_kusuri"):
-        List=np.loadtxt(filepath, delimiter=',')
-        Listcut=np.array(List [:,0:8])
-        pil_image = Image.fromarray(np.rot90(np.uint8(Listcut)))
-        img=img_to_array(pil_image)
-        data_x.append(img)
-        data_y.append(4) # 教師データ（正解）
-
-    print("mu_ko")
-    for filepath in list_csv(SAVE_DATA_DIR_PATH + "mu_ko"):
-        List=np.loadtxt(filepath, delimiter=',')
-        Listcut=np.array(List [:,0:8])
+        Listcut=np.array(List [:,:])
         pil_image = Image.fromarray(np.rot90(np.uint8(Listcut)))
         img=img_to_array(pil_image)
         data_x.append(img)
         data_y.append(5) # 教師データ（正解）
+
+    # print("mu_oya")
+    # for filepath in list_csv(SAVE_DATA_DIR_PATH + "mu_oya"):
+    #     List=np.loadtxt(filepath, delimiter=',')
+    #     Listcut=np.array(List [:,0:8])
+    #     pil_image = Image.fromarray(np.rot90(np.uint8(Listcut)))
+    #     img=img_to_array(pil_image)
+    #     data_x.append(img)
+    #     data_y.append(1) # 教師データ（正解）
+
+    # print("mu_hitosashi")
+    # for filepath in list_csv(SAVE_DATA_DIR_PATH + "mu_hitosashi"):
+    #     List=np.loadtxt(filepath, delimiter=',')
+    #     Listcut=np.array(List [:,0:8])
+    #     pil_image = Image.fromarray(np.rot90(np.uint8(Listcut)))
+    #     img=img_to_array(pil_image)
+    #     data_x.append(img)
+    #     data_y.append(2) # 教師データ（正解）
+
+    # print("mu_naka")
+    # for filepath in list_csv(SAVE_DATA_DIR_PATH + "mu_naka"):
+    #     List=np.loadtxt(filepath, delimiter=',')
+    #     Listcut=np.array(List [:,0:8])
+    #     pil_image = Image.fromarray(np.rot90(np.uint8(Listcut)))
+    #     img=img_to_array(pil_image)
+    #     data_x.append(img)
+    #     data_y.append(3) # 教師データ（正解）
+
+    # print("mu_kusuri")
+    # for filepath in list_csv(SAVE_DATA_DIR_PATH + "mu_kusuri"):
+    #     List=np.loadtxt(filepath, delimiter=',')
+    #     Listcut=np.array(List [:,0:8])
+    #     pil_image = Image.fromarray(np.rot90(np.uint8(Listcut)))
+    #     img=img_to_array(pil_image)
+    #     data_x.append(img)
+    #     data_y.append(4) # 教師データ（正解）
+
+    # print("mu_ko")
+    # for filepath in list_csv(SAVE_DATA_DIR_PATH + "mu_ko"):
+    #     List=np.loadtxt(filepath, delimiter=',')
+    #     Listcut=np.array(List [:,0:8])
+    #     pil_image = Image.fromarray(np.rot90(np.uint8(Listcut)))
+    #     img=img_to_array(pil_image)
+    #     data_x.append(img)
+    #     data_y.append(5) # 教師データ（正解）
 
 # # クラス0の画像データ群をロード    
     # print("class0")
