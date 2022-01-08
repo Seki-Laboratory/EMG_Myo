@@ -62,12 +62,12 @@ def main():
     # パラメータ
     batch_size = 5 # バッチサイズ
     num_classes = 6 # 分類クラス数(今回は15種類)
-    epochs = 100     # エポック数(学習の繰り返し回数)
+    epochs = 25    # エポック数(学習の繰り返し回数)
     dropout_rate = 0.2 # 過学習防止用：入力の20%を0にする（破棄）
 
     # データ格納用のディレクトリパス
-    # SAVE_DATA_DIR_PATH = "C:/Users/usui0/Desktop/2021_sekilab_data/law2/"
-    SAVE_DATA_DIR_PATH = "C:/Users/usui0/Desktop/data/"
+    SAVE_DATA_DIR_PATH = "C:/Users/usui0/Desktop/2021_sekilab_data/demo/"
+    # SAVE_DATA_DIR_PATH = "C:/Users/usui0/Desktop/data/"
 
     SAVE_DATA_DIR_PATH1 = "img/"
     # ディレクトリがなければ作成
@@ -85,7 +85,7 @@ def main():
     print("oya")
     for filepath in list_csv(SAVE_DATA_DIR_PATH + "oya"):
         List=np.loadtxt(filepath, delimiter=',')
-        Listcut=np.array(List [:,:])
+        Listcut=np.array(List [:,0:8])
         pil_image = Image.fromarray(np.rot90(np.uint8(Listcut)))
         img=img_to_array(pil_image)
         data_x.append(img)
@@ -139,7 +139,7 @@ def main():
     print("hitosashi")
     for filepath in list_csv(SAVE_DATA_DIR_PATH + "hitosashi"):
         List=np.loadtxt(filepath, delimiter=',')
-        Listcut=np.array(List [:,:])
+        Listcut=np.array(List [:,0:8])
         pil_image = Image.fromarray(np.rot90(np.uint8(Listcut)))
         img=img_to_array(pil_image)
         data_x.append(img)
@@ -194,7 +194,7 @@ def main():
     print("naka")
     for filepath in list_csv(SAVE_DATA_DIR_PATH + "naka"):
         List=np.loadtxt(filepath, delimiter=',')
-        Listcut=np.array(List [:,:])
+        Listcut=np.array(List [:,0:8])
         pil_image = Image.fromarray(np.rot90(np.uint8(Listcut)))
         img=img_to_array(pil_image)
         data_x.append(img)
@@ -249,7 +249,7 @@ def main():
     print("kusuri")
     for filepath in list_csv(SAVE_DATA_DIR_PATH + "kusuri"):
         List=np.loadtxt(filepath, delimiter=',')
-        Listcut=np.array(List [:,:])
+        Listcut=np.array(List [:,0:8])
         pil_image = Image.fromarray(np.rot90(np.uint8(Listcut)))
         img=img_to_array(pil_image)
         data_x.append(img)
@@ -304,7 +304,7 @@ def main():
     print("ko")
     for filepath in list_csv(SAVE_DATA_DIR_PATH + "ko"):
         List=np.loadtxt(filepath, delimiter=',')
-        Listcut=np.array(List [:,:])
+        Listcut=np.array(List [:,0:8])
         pil_image = Image.fromarray(np.rot90(np.uint8(Listcut)))
         img=img_to_array(pil_image)
         data_x.append(img)
@@ -359,7 +359,7 @@ def main():
     print("mu")
     for filepath in list_csv(SAVE_DATA_DIR_PATH + "mu"):
         List=np.loadtxt(filepath, delimiter=',')
-        Listcut=np.array(List [:,:])
+        Listcut=np.array(List [:,0:8])
         pil_image = Image.fromarray(np.rot90(np.uint8(Listcut)))
         img=img_to_array(pil_image)
         data_x.append(img)

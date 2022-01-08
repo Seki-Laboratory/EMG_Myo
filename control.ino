@@ -10,7 +10,12 @@ void setup() {
  pwm.begin();                   //初期設定 (アドレス0x40用)
  pwm.setPWMFreq(60);            //PWM周期を60Hzに設定 (アドレス0x40用)
  Serial.begin(9600);
- servo_write(0,80);
+servo_write(0,80);
+servo_write(1,80);
+servo_write(2,80);
+servo_write(4,80);
+servo_write(3,100);
+servo_write(5,100);
 
 }
 
@@ -29,27 +34,32 @@ void loop() {
 inputkey = Serial.read();
 if(inputkey != -1);{
   switch(inputkey){
-case'0'://初期位置
+case'0'://親指
 servo_write(0,80);
 servo_write(1,80);
 servo_write(2,80);
 servo_write(4,80);
+servo_write(3,120);
+servo_write(5,140);
 break;
 
 
-case'1'://開く
+case'1'://人差し指
 servo_write(0,100);
 servo_write(1,80);
 servo_write(2,80);
 servo_write(4,80);
-
+servo_write(3,100);
+servo_write(5,100);
 break;
 
-case'2'://小指
+case'2'://中指
 servo_write(0,80);
 servo_write(1,120);
 servo_write(2,80);
 servo_write(4,80);
+servo_write(3,100);
+servo_write(5,100);
 break;
 
 case'3'://薬指
@@ -57,19 +67,26 @@ servo_write(0,80);
 servo_write(1,80);
 servo_write(2,112);
 servo_write(4,80);
+servo_write(3,100);
+servo_write(5,100);
 break;
 
-case'4'://中指
+case'4'://小指
 servo_write(0,80);
 servo_write(1,80);
 servo_write(2,80);
 servo_write(4,110);
-
+servo_write(3,100);
+servo_write(5,100);
 break;
 
-case'5'://人差し指
-
-
+case'5'://初期位置
+servo_write(0,80);
+servo_write(1,80);
+servo_write(2,80);
+servo_write(4,80);
+servo_write(3,100);
+servo_write(5,100);
 break;
 
 

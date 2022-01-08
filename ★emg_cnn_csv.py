@@ -11,7 +11,7 @@ import cv2
 from tensorflow.keras.models import Sequential, model_from_json
 from tensorflow.keras.utils import to_categorical
 from tensorflow.keras.preprocessing.image import load_img, img_to_array
-
+import serial
 from PIL import Image
 
 # from sklearn.neighbors import KNeighborsClassifier
@@ -33,10 +33,10 @@ class Emg(myo.DeviceListener):
     self.geta127 = [128,128,128,128,128,128,128,128]
     #_____cnn_init________
     # データの保存先(自分の環境に応じて適宜変更)
-    SAVE_DATA_DIR_PATH = "C:/Users/usui0/Desktop/2021_sekilab_data/law2/"
+    SAVE_DATA_DIR_PATH = "C:/Users/usui0/Desktop/2021_sekilab_data/demo/"
     # ラベル
     print("ok")
-    self.labels =['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'oya', 'hitosashi', 'naka', 'kusuri', 'ko',"mu"]
+    self.labels =['oya', 'hitosashi', 'naka', 'kusuri', 'ko',"mu"]
     # self.labels =['oya', 'hitosashi', 'naka', 'kusuri', 'ko',"mu"]
     # 保存したモデル構造の読み込み
     self.model = model_from_json(open(SAVE_DATA_DIR_PATH+"lawmodel.json", 'r').read())
@@ -44,6 +44,8 @@ class Emg(myo.DeviceListener):
     # 保存した学習済みの重みを読み込み
     self.model.load_weights(SAVE_DATA_DIR_PATH + "lawweight.h5")
     print("モデルと重みの読み込み完了")
+    #______serial_init_____
+    self.ser = serial.Serial('COM5',9600)
 
     
 
@@ -131,20 +133,21 @@ class Emg(myo.DeviceListener):
         y_pred = self.model.predict(img)
 # 最も確率の高い要素番号
         number_pred = np.argmax(y_pred) 
-        print("認識結果",self.labels[int(number_pred)])
-
-        # self.element = np.append(self.element,number_pred)
-        # if len(self.element) == 21:
-        #   c = collections.Counter(self.element[1:])
-        #   # print(c.most_common()[0])
-        #   list = c.most_common()[0]
-        #   if list[1] == 20:
-        #     list_c = int(list[0])
-        #     print("認識結果",self.labels[list_c])
-        #   else:
-        #     print("認識結果","none")
-        #     pass
-        #   self.element = np.delete(self.element,1)
+        # print("認識結果",self.labels[int(number_pred)])
+        # self.ser.write(bytes(str(number_pred),'utf-8')) 
+        self.element = np.append(self.element,number_pred)
+        if len(self.element) == 15:
+          c = collections.Counter(self.element[1:])
+          # print(c.most_common()[0])
+          list = c.most_common()[0]
+          if list[1] == 14:
+            list_c = int(list[0])
+            print("認識結果",self.labels[list_c])
+            self.ser.write(bytes(str(list_c),'utf-8')) 
+          else:
+            print("認識結果","none")
+            pass
+          self.element = np.delete(self.element,1)
 
 
 

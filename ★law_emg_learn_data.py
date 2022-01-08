@@ -37,15 +37,15 @@ class Emg(myo.DeviceListener):
       event.device.stream_emg(True)
 
   def on_emg(self,event):
-    SAVE_DATA_DIR_PATH = "C:/Users/usui0/Desktop/2021_sekilab_data/law2/"
-    JES = "hitosashi_oya"
+    SAVE_DATA_DIR_PATH = "C:/Users/usui0/Desktop/2021_sekilab_data/demo/"
+    JES = "hitosashi"
 
     self.emg = np.array(event.emg)
     #myo_armbandは8bit(-128~127)の値を返すので127足して基準位置をずらします。
     gemg = self.geta128+self.emg
     print(gemg)
     if self.i <= self.n-1:
-        with open(SAVE_DATA_DIR_PATH+JES+"/"+JES+'_emgdata'+str(self.label)+'.csv', 'a') as f:
+        with open(SAVE_DATA_DIR_PATH+JES+"/"+JES+'_emgdata'+str(self.label+202)+'.csv', 'a') as f:
             writer = csv.writer(f, lineterminator='\n') # 行末は改行
             law_emg = np.append(gemg,self.label)
             writer.writerow(law_emg)
